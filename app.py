@@ -48,16 +48,6 @@ def _cache_static(response):
         response.cache_control.public = True
     return response
 
-@app.after_request
-def _admin_session_clear(response):
-    try:
-        is_admin_page = request.path.startswith("/admin") and request.endpoint != "admin_login"
-        is_success = response.status_code < 400
-        if is_admin_page and is_success:
-            session.pop("logged_in", None)
-    except Exception:
-        pass
-    return response
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(ROOT_DIR, "data")
