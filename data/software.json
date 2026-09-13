@@ -1,0 +1,113 @@
+﻿[
+  {
+    "id": "maya",
+    "name": "Autodesk Maya",
+    "icon": "",
+    "category": "3D Skills",
+    "description": "Industry-standard 3D modeling, animation, and rendering software",
+    "isActive": true,
+    "sortOrder": 1,
+    "createdAt": "2026-09-12T00:00:00Z",
+    "updatedAt": "2026-09-12T16:45:31Z",
+    "csrf_token": "c8c44826d1b4346c9d9de0d76b3bf220"
+  },
+  {
+    "id": "blender",
+    "name": "Blender",
+    "icon": "",
+    "category": "3D Skills",
+    "description": "Free and open-source 3D creation suite",
+    "isActive": true,
+    "sortOrder": 2,
+    "createdAt": "2026-09-12T00:00:00Z",
+    "updatedAt": "2026-09-12T00:00:00Z"
+  },
+  {
+    "id": "unreal-engine",
+    "name": "Unreal Engine",
+    "icon": "",
+    "category": "3D Skills",
+    "description": "Real-time 3D creation platform for games and visualizations",
+    "isActive": true,
+    "sortOrder": 3,
+    "createdAt": "2026-09-12T00:00:00Z",
+    "updatedAt": "2026-09-12T00:00:00Z"
+  },
+  {
+    "id": "substance-painter",
+    "name": "Substance 3D Painter",
+    "icon": "",
+    "category": "3D Skills",
+    "description": "3D texturing software for creating PBR materials",
+    "isActive": true,
+    "sortOrder": 4,
+    "createdAt": "2026-09-12T00:00:00Z",
+    "updatedAt": "2026-09-12T00:00:00Z"
+  },
+  {
+    "id": "zbrush",
+    "name": "ZBrush",
+    "icon": "",
+    "category": "3D Skills",
+    "description": "Digital sculpting and modeling software",
+    "isActive": true,
+    "sortOrder": 5,
+    "createdAt": "2026-09-12T00:00:00Z",
+    "updatedAt": "2026-09-12T00:00:00Z"
+  },
+  {
+    "id": "photoshop",
+    "name": "Adobe Photoshop",
+    "icon": "",
+    "category": "Post Production",
+    "description": "Industry-standard image editing and compositing software",
+    "isActive": true,
+    "sortOrder": 6,
+    "createdAt": "2026-09-12T00:00:00Z",
+    "updatedAt": "2026-09-12T00:00:00Z"
+  },
+  {
+    "id": "after-effects",
+    "name": "Adobe After Effects",
+    "icon": "",
+    "category": "Post Production",
+    "description": "Motion graphics and visual effects software",
+    "isActive": true,
+    "sortOrder": 7,
+    "createdAt": "2026-09-12T00:00:00Z",
+    "updatedAt": "2026-09-12T00:00:00Z"
+  },
+  {
+    "id": "davinci-resolve",
+    "name": "DaVinci Resolve",
+    "icon": "",
+    "category": "Post Production",
+    "description": "Professional video editing, color grading, and audio post-production",
+    "isActive": true,
+    "sortOrder": 8,
+    "createdAt": "2026-09-12T00:00:00Z",
+    "updatedAt": "2026-09-12T00:00:00Z"
+  },
+  {
+    "id": "marmoset",
+    "name": "Marmoset Toolbag",
+    "icon": "",
+    "category": "3D Skills",
+    "description": "3D modeling, texturing, and rendering toolkit",
+    "isActive": true,
+    "sortOrder": 9,
+    "createdAt": "2026-09-12T00:00:00Z",
+    "updatedAt": "2026-09-12T00:00:00Z"
+  },
+  {
+    "id": "marvelous",
+    "name": "Marvelous Designer",
+    "icon": "",
+    "category": "3D Skills",
+    "description": "3D clothing design and simulation software",
+    "isActive": true,
+    "sortOrder": 10,
+    "createdAt": "2026-09-12T00:00:00Z",
+    "updatedAt": "2026-09-12T00:00:00Z"
+  }
+]

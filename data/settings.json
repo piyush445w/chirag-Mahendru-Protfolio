@@ -1,0 +1,159 @@
+﻿{
+  "name": "Chirag Mahendru",
+  "title": "3D Environment Artist",
+  "tagline": "Crafting Beyond Imagination",
+  "subtitle": "Maya - Blender - Unreal Engine - Substance Painter - ZBrush - 3ds Max",
+  "bio": "I am a passionate 3D Artist based in Punjab, India, specializing in modeling, texturing, lighting, and rendering. With hands-on experience in Unreal Engine, Maya, Blender, Substance Painter, and ZBrush, I focus on creating realistic assets and visually compelling environments.",
+  "heroMedia": "assets/Create_a_cinematic_photoreali.mp4",
+  "heroImage": "",
+  "profileImage": "",
+  "image": "",
+  "resumeUrl": "",
+  "heroTitleLines": [
+    "Crafting",
+    "Beyond",
+    "Imagination"
+  ],
+  "heroBadge": "3D Environment Artist",
+  "footerBrand": "Chirag Mahendru - 3D Environment Artist",
+  "footerCopyright": "All rights reserved",
+  "contactDescription": "Interested in collaboration, freelance work, or just want to connect? I am always open to discussing new projects and creative ideas.",
+  "mobileYear": "Portfolio 2025",
+  "sectionLabels": {
+    "about": "Introduction",
+    "work": "Selected Work",
+    "resume": "Experience",
+    "services": "What I Offer",
+    "contact": "Get In Touch"
+  },
+  "resumeSectionTitles": {
+    "summary": "Summary",
+    "experience": "Experience",
+    "skills": "Skills",
+    "awards": "Awards",
+    "software": "Software"
+  },
+  "seoTitle": "Chirag Mahendru | 3D Environment Artist",
+  "seoDescription": "3D Artist specializing in modeling, texturing, lighting, and rendering. Expert in Unreal Engine, Maya, Blender, and ZBrush.",
+  "ogImage": "",
+  "robots": "index, follow",
+  "email": "mahendruchirag901@gmail.com",
+  "location": "Punjab, India",
+  "phone": "7719661103",
+  "linkedin": "https://www.linkedin.com/in/chiragmahendru7622/",
+  "socials": {
+    "linkedin": "https://www.linkedin.com/in/chiragmahendru7622/",
+    "artstation": "https://www.artstation.com/chiragmahendru3"
+  },
+  "skills": [
+    "3D Rendering",
+    "3D Modeling",
+    "3D Lighting",
+    "Game Art",
+    "Environment Design",
+    "Hard Surface Modeling",
+    "Asset Creation",
+    "UV Mapping",
+    "Retopology",
+    "Sculpting",
+    "PBR Texturing"
+  ],
+  "awards": [
+    {
+      "event": "24 Frames 2023",
+      "achievement": "Matte Painting - Nomination"
+    },
+    {
+      "event": "24 Frames 2024",
+      "achievement": "3D Environment - Participation"
+    },
+    {
+      "event": "Punjab Animation Awards 2025",
+      "achievement": "Recognition"
+    }
+  ],
+  "education": [
+    {
+      "institution": "MAAC",
+      "degree": "Professional Training",
+      "focus": "3D Generalist Focus",
+      "specialization": "Maya Specialist - Primary Expertise"
+    }
+  ],
+  "resume": {
+    "name": "Chirag Mahendru",
+    "title": "3D Artist | Environment Specialist",
+    "email": "mahendruchirag901@gmail.com",
+    "location": "Punjab, India",
+    "summary": "Versatile 3D Artist with expertise in creating photorealistic environments and assets. Expert in Unreal Engine 5 lighting and real-time visualization.",
+    "experience": [
+      {
+        "role": "3D Artist",
+        "company": "MAAC",
+        "period": "Nov 2024 - Present",
+        "description": "Creating 3D assets and environments for game and film projects"
+      }
+    ],
+    "skills": [
+      "Hard Surface Modeling",
+      "Environment Design",
+      "Asset Creation",
+      "UV Mapping",
+      "Retopology",
+      "Sculpting",
+      "PBR Texturing",
+      "Lighting & Rendering"
+    ],
+    "software": [
+      "Maya",
+      "Unreal Engine 5",
+      "3ds Max",
+      "Substance Painter",
+      "ZBrush",
+      "After Effects",
+      "V-Ray",
+      "Arnold"
+    ]
+  },
+  "tools": [
+    "Maya",
+    "Blender",
+    "Unreal Engine",
+    "Substance Painter",
+    "ZBrush",
+    "3ds Max"
+  ],
+  "services": [
+    {
+      "id": "3d-modeling",
+      "title": "3D Modeling",
+      "description": "High-poly and low-poly assets for games and film"
+    },
+    {
+      "id": "product-viz",
+      "title": "Product Visualization",
+      "description": "Photorealistic renders for marketing"
+    },
+    {
+      "id": "game-assets",
+      "title": "Game Assets Creation",
+      "description": "Optimized game-ready assets with PBR textures"
+    },
+    {
+      "id": "ue-environment",
+      "title": "UE Environment Setup",
+      "description": "Complete environment assembly and optimization"
+    },
+    {
+      "id": "texturing",
+      "title": "Texturing & Look Dev",
+      "description": "Advanced PBR material creation"
+    },
+    {
+      "id": "cinematic-rendering",
+      "title": "Cinematic Rendering",
+      "description": "High-end renders with dynamic lighting"
+    }
+  ],
+  "updatedAt": "2026-09-11T18:18:17Z"
+}

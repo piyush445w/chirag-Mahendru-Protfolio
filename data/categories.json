@@ -1,0 +1,22 @@
+[
+  {
+    "id": "product-viz",
+    "name": "Product Visualization",
+    "slug": "product-visualization"
+  },
+  {
+    "id": "prop-art",
+    "name": "Prop Art",
+    "slug": "prop-art"
+  },
+  {
+    "id": "character-art",
+    "name": "Character Art",
+    "slug": "character-art"
+  },
+  {
+    "id": "animation",
+    "name": "Animation",
+    "slug": "animation"
+  }
+]
