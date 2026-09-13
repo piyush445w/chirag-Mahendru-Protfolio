@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEO - Admin</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #0f0f23;
+            color: #e0e0e0;
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 260px;
+            background: rgba(255,255,255,0.03);
+            border-right: 1px solid rgba(255,255,255,0.08);
+            padding: 24px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+        .sidebar-logo {
+            font-size: 22px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 32px;
+        }
+        .nav-link {
+            display: block;
+            padding: 12px 16px;
+            color: #9ca3af;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-bottom: 4px;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .nav-link:hover, .nav-link.active {
+            background: rgba(99, 102, 241, 0.1);
+            color: #6366f1;
+        }
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            padding: 32px;
+            max-width: calc(100% - 260px);
+        }
+        .page-title { font-size: 28px; font-weight: 700; margin-bottom: 24px; }
+        .card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        .form-group { margin-bottom: 16px; }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px 14px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            color: #e0e0e0;
+            font-size: 14px;
+            font-family: inherit;
+        }
+        .form-group textarea { min-height: 100px; resize: vertical; }
+        .btn-primary {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        @media (max-width: 768px) {
+            .sidebar { width: 100%; position: relative; height: auto; }
+            .main-content { margin-left: 0; max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-logo">Chirag Admin</div>
+        <a href="/admin" class="nav-link {{ 'active' if active_page == 'dashboard' }}">Dashboard</a>
+        <a href="/admin/projects" class="nav-link {{ 'active' if active_page == 'projects' }}">Projects</a>
+        <a href="/admin/categories" class="nav-link {{ 'active' if active_page == 'categories' }}">Categories</a>
+        <a href="/admin/settings" class="nav-link {{ 'active' if active_page == 'settings' }}">Settings</a>
+        <a href="/admin/media" class="nav-link {{ 'active' if active_page == 'media' }}">Media</a>
+        <a href="/admin/seo" class="nav-link {{ 'active' if active_page == 'seo' }}">SEO</a>
+        <a href="/admin/skills" class="nav-link {{ 'active' if active_page == 'skills' }}">Skills</a>
+        <a href="/admin/experience" class="nav-link {{ 'active' if active_page == 'experience' }}">Experience</a>
+        <a href="/admin/software" class="nav-link {{ 'active' if active_page == 'software' }}">Software</a>
+        <a href="/admin/logout" class="nav-link" style="color: #ef4444;">Logout</a>
+    </aside>
+    <main class="main-content">
+        <h1 class="page-title">SEO Settings</h1>
+        <div class="card">
+            <form onsubmit="saveSEO(event)">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <div class="form-group">
+                    <label>SEO Title</label>
+                    <input type="text" name="seoTitle" value="{{ settings.seoTitle }}">
+                </div>
+                <div class="form-group">
+                    <label>SEO Description</label>
+                    <textarea name="seoDescription">{{ settings.seoDescription }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label>OG Image</label>
+                    <input type="text" name="ogImage" value="{{ settings.ogImage }}">
+                </div>
+                <div class="form-group">
+                    <label>Robots</label>
+                    <input type="text" name="robots" value="{{ settings.robots }}">
+                </div>
+                <button type="submit" class="btn-primary">Save SEO</button>
+            </form>
+        </div>
+    </main>
+    <script>
+        async function saveSEO(e) {
+            e.preventDefault();
+            const form = e.target;
+            const data = {
+                seoTitle: form.querySelector('[name=seoTitle]').value,
+                seoDescription: form.querySelector('[name=seoDescription]').value,
+                ogImage: form.querySelector('[name=ogImage]').value,
+                robots: form.querySelector('[name=robots]').value
+            };
+            const csrf = form.querySelector('input[name=csrf_token]').value;
+            const res = await fetch('/admin/seo', {
+                method: 'PUT',
+                headers: {'Content-Type': 'application/json', 'X-CSRFToken': csrf},
+                body: JSON.stringify(data)
+            });
+            if (res.ok) { alert('SEO saved'); } else { alert('Error saving SEO'); }
+        }
+    </script>
+</body>
+</html>

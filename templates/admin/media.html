@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media - Admin</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #0f0f23;
+            color: #e0e0e0;
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 260px;
+            background: rgba(255,255,255,0.03);
+            border-right: 1px solid rgba(255,255,255,0.08);
+            padding: 24px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+        .sidebar-logo {
+            font-size: 22px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 32px;
+        }
+        .nav-link {
+            display: block;
+            padding: 12px 16px;
+            color: #9ca3af;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-bottom: 4px;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .nav-link:hover, .nav-link.active {
+            background: rgba(99, 102, 241, 0.1);
+            color: #6366f1;
+        }
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            padding: 32px;
+            max-width: calc(100% - 260px);
+        }
+        .page-title { font-size: 28px; font-weight: 700; margin-bottom: 24px; }
+        .card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        .form-group { margin-bottom: 16px; }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px 14px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            color: #e0e0e0;
+            font-size: 14px;
+        }
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+        }
+        .media-item {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+        .media-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+        .media-item-info {
+            padding: 12px;
+            font-size: 12px;
+            color: #9ca3af;
+        }
+        .media-item-actions {
+            display: flex;
+            gap: 8px;
+            padding: 0 12px 12px;
+        }
+        .btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-primary { background: #6366f1; color: white; }
+        .btn-danger { background: rgba(239,68,68,0.1); color: #fca5a5; border: 1px solid rgba(239,68,68,0.2); }
+        .hidden { display: none !important; }
+        @media (max-width: 768px) {
+            .sidebar { width: 100%; position: relative; height: auto; }
+            .main-content { margin-left: 0; max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-logo">Chirag Admin</div>
+        <a href="/admin" class="nav-link {{ 'active' if active_page == 'dashboard' }}">Dashboard</a>
+        <a href="/admin/projects" class="nav-link {{ 'active' if active_page == 'projects' }}">Projects</a>
+        <a href="/admin/categories" class="nav-link {{ 'active' if active_page == 'categories' }}">Categories</a>
+        <a href="/admin/settings" class="nav-link {{ 'active' if active_page == 'settings' }}">Settings</a>
+        <a href="/admin/media" class="nav-link {{ 'active' if active_page == 'media' }}">Media</a>
+        <a href="/admin/seo" class="nav-link {{ 'active' if active_page == 'seo' }}">SEO</a>
+        <a href="/admin/skills" class="nav-link {{ 'active' if active_page == 'skills' }}">Skills</a>
+        <a href="/admin/experience" class="nav-link {{ 'active' if active_page == 'experience' }}">Experience</a>
+        <a href="/admin/software" class="nav-link {{ 'active' if active_page == 'software' }}">Software</a>
+        <a href="/admin/logout" class="nav-link" style="color: #ef4444;">Logout</a>
+    </aside>
+    <main class="main-content">
+        <h1 class="page-title">Media Library</h1>
+        <div class="card">
+            <h3 style="margin-bottom: 16px;">Upload Media</h3>
+            <form id="upload-form" onsubmit="uploadMedia(event)" enctype="multipart/form-data">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <div class="form-group">
+                    <label>File</label>
+                    <input type="file" name="file" required>
+                </div>
+                <div class="form-group">
+                    <label>Folder</label>
+                    <select name="folder">
+                        <option value="hero">Hero</option>
+                        <option value="projects">Projects</option>
+                        <option value="general">General</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Upload</button>
+            </form>
+        </div>
+        <div class="media-grid">
+            {% for m in media %}
+            <div class="media-item">
+                {% if m.type in ['jpg', 'jpeg', 'png', 'gif', 'webp'] %}
+                <img src="{{ m.url }}" alt="{{ m.filename }}">
+                {% else %}
+                <div style="height: 150px; display: flex; align-items: center; justify-content: center; color: #6b7280;">{{ m.type.upper() }}</div>
+                {% endif %}
+                <div class="media-item-info">
+                    <div style="font-weight: 600; color: #e0e0e0;">{{ m.filename }}</div>
+                    <div>{{ formatSize(m.size) }} | {{ m.type }}</div>
+                </div>
+                <div class="media-item-actions">
+                    <button class="btn btn-primary" onclick="copyMediaUrl('{{ m.url }}')">Copy URL</button>
+                    <button class="btn btn-danger" onclick="deleteMedia('{{ m.id }}')">Delete</button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+    <script>
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        function copyMediaUrl(url) {
+            navigator.clipboard.writeText(window.location.origin + url).then(() => { alert('URL copied: ' + url); });
+        }
+        async function uploadMedia(e) {
+            e.preventDefault();
+            const form = e.target;
+            const fd = new FormData(form);
+            const res = await fetch('/admin/upload', { method: 'POST', body: fd });
+            if (res.ok) { location.reload(); } else { alert('Upload failed'); }
+        }
+        async function deleteMedia(id) {
+            if (!confirm('Delete this file?')) return;
+            const csrf = document.querySelector('input[name=csrf_token]').value;
+            const res = await fetch('/api/admin/media/' + encodeURIComponent(id), { method: 'DELETE', headers: {'X-CSRFToken': csrf} });
+            if (res.ok) { location.reload(); } else { alert('Error deleting media'); }
+        }
+    </script>
+</body>
+</html>

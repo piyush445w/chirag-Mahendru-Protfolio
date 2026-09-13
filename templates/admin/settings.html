@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Admin</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #0f0f23;
+            color: #e0e0e0;
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 260px;
+            background: rgba(255,255,255,0.03);
+            border-right: 1px solid rgba(255,255,255,0.08);
+            padding: 24px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+        .sidebar-logo {
+            font-size: 22px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 32px;
+        }
+        .nav-link {
+            display: block;
+            padding: 12px 16px;
+            color: #9ca3af;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-bottom: 4px;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .nav-link:hover, .nav-link.active {
+            background: rgba(99, 102, 241, 0.1);
+            color: #6366f1;
+        }
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            padding: 32px;
+            max-width: calc(100% - 260px);
+        }
+        .page-title { font-size: 28px; font-weight: 700; margin-bottom: 24px; }
+        .card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        .card h3 { margin-bottom: 20px; font-size: 18px; color: #e0e0e0; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #d1d5db;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px 14px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            color: #e0e0e0;
+            font-size: 14px;
+            font-family: inherit;
+        }
+        .form-group textarea { min-height: 100px; resize: vertical; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+        }
+        .array-item {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .array-item input { flex: 1; }
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 12px;
+            border-radius: 6px;
+        }
+        .btn-add {
+            background: rgba(99,102,241,0.1);
+            color: #6366f1;
+            border: 1px solid rgba(99,102,241,0.2);
+        }
+        .drop-zone {
+            border: 2px dashed rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 24px;
+            text-align: center;
+            color: #6b7280;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .drop-zone:hover { border-color: #6366f1; color: #6366f1; }
+        .hidden { display: none !important; }
+        @media (max-width: 768px) {
+            .sidebar { width: 100%; position: relative; height: auto; }
+            .main-content { margin-left: 0; max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-logo">Chirag Admin</div>
+        <a href="/admin" class="nav-link {{ 'active' if active_page == 'dashboard' }}">Dashboard</a>
+        <a href="/admin/projects" class="nav-link {{ 'active' if active_page == 'projects' }}">Projects</a>
+        <a href="/admin/categories" class="nav-link {{ 'active' if active_page == 'categories' }}">Categories</a>
+        <a href="/admin/settings" class="nav-link {{ 'active' if active_page == 'settings' }}">Settings</a>
+        <a href="/admin/media" class="nav-link {{ 'active' if active_page == 'media' }}">Media</a>
+        <a href="/admin/seo" class="nav-link {{ 'active' if active_page == 'seo' }}">SEO</a>
+        <a href="/admin/skills" class="nav-link {{ 'active' if active_page == 'skills' }}">Skills</a>
+        <a href="/admin/experience" class="nav-link {{ 'active' if active_page == 'experience' }}">Experience</a>
+        <a href="/admin/software" class="nav-link {{ 'active' if active_page == 'software' }}">Software</a>
+        <a href="/admin/logout" class="nav-link" style="color: #ef4444;">Logout</a>
+    </aside>
+    <main class="main-content">
+        <h1 class="page-title">Settings</h1>
+        <form id="settings-form" onsubmit="saveSettings(event)">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="heroImage" id="settings-heroImage" value="{{ settings.heroImage }}">
+            <div class="card">
+                <h3>General</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" name="name" value="{{ settings.name }}">
+                    </div>
+                    <div class="form-group">
+                        <label>Title</label>
+                        <input type="text" name="title" value="{{ settings.title }}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Subtitle / Tagline</label>
+                    <input type="text" name="subtitle" value="{{ settings.subtitle }}">
+                </div>
+                <div class="form-group">
+                    <label>Bio</label>
+                    <textarea name="bio">{{ settings.bio }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="email" value="{{ settings.email }}">
+                </div>
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="text" name="phone" value="{{ settings.phone }}">
+                </div>
+                <div class="form-group">
+                    <label>Location</label>
+                    <input type="text" name="location" value="{{ settings.location }}">
+                </div>
+                <div class="form-group">
+                    <label>Profile Image</label>
+                    <input type="text" name="profileImage" value="{{ settings.profileImage }}">
+                </div>
+                <div class="form-group">
+                    <label>Hero Media</label>
+                    <input type="text" name="heroMedia" value="{{ settings.heroMedia }}">
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>SEO</h3>
+                <div class="form-group">
+                    <label>SEO Title</label>
+                    <input type="text" name="seoTitle" value="{{ settings.seoTitle }}">
+                </div>
+                <div class="form-group">
+                    <label>SEO Description</label>
+                    <textarea name="seoDescription">{{ settings.seoDescription }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label>OG Image</label>
+                    <input type="text" name="ogImage" value="{{ settings.ogImage }}">
+                </div>
+                <div class="form-group">
+                    <label>Robots</label>
+                    <input type="text" name="robots" value="{{ settings.robots }}">
+                </div>
+            </div>
+            <div class="card">
+                <h3>Skills</h3>
+                <div id="skills-list">
+                    {% for skill in skills_list %}
+                    <div class="array-item">
+                        <input type="text" value="{{ skill }}" readonly>
+                        <button type="button" class="btn btn-danger btn-sm" onclick="removeSkill(this, {{ skill|tojson }})">Remove</button>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="array-item" style="margin-top: 12px;">
+                    <input type="text" id="new-skill" placeholder="Add new skill...">
+                    <button type="button" class="btn btn-primary btn-sm" onclick="addSkill()">Add</button>
+                </div>
+            </div>
+            <div class="card">
+                <h3>Experience</h3>
+                <div id="experience-list">
+                    {% for exp in experience_list %}
+                    <div class="card" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Role</label>
+                                <input type="text" value="{{ exp.role }}">
+                            </div>
+                            <div class="form-group">
+                                <label>Company</label>
+                                <input type="text" value="{{ exp.company }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Period</label>
+                            <input type="text" value="{{ exp.period }}">
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea>{{ exp.description }}</textarea>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="array-item" style="margin-top: 12px;">
+                    <input type="text" id="new-exp-role" placeholder="Role">
+                    <input type="text" id="new-exp-company" placeholder="Company">
+                    <input type="text" id="new-exp-period" placeholder="Period">
+                    <textarea id="new-exp-desc" placeholder="Description" style="min-height: 60px;"></textarea>
+                    <button type="button" class="btn btn-primary btn-sm" onclick="addExperience()">Add</button>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" style="font-size: 16px; padding: 14px 28px;">Save Settings</button>
+        </form>
+        
+        <div class="card">
+            <h3>Hero Image</h3>
+            <div id="hero-image-preview" style="margin-bottom: 16px;">
+                {% if settings.heroImage %}
+                <img src="{{ settings.heroImage }}" alt="Hero Image" style="max-width: 100%; max-height: 300px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.08);">
+                {% else %}
+                <p style="color: #6b7280; font-size: 14px;">No hero image set</p>
+                {% endif %}
+            </div>
+            <form id="hero-image-form" enctype="multipart/form-data">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <div class="form-group">
+                    <label>Upload Hero Image</label>
+                    <div class="drop-zone" id="hero-drop-zone">
+                        <p>Drop an image here or click to browse</p>
+                        <input type="file" name="file" id="hero-image-file" accept="image/*" required style="display: none;">
+                        <p id="hero-drop-name" style="margin-top:8px;font-size:13px;color:#6366f1;"></p>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 12px;">
+                    <button type="button" class="btn btn-primary" onclick="uploadHeroImage()">Upload & Set as Hero</button>
+                    {% if settings.heroImage %}
+                    <button type="button" class="btn btn-danger" onclick="clearHeroImage()">Remove</button>
+                    {% endif %}
+                </div>
+            </form>
+        </div>
+    </main>
+<script>
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        function addSkill() {
+            const input = document.getElementById('new-skill');
+            const val = input.value.trim();
+            if (!val) return;
+            const div = document.createElement('div');
+            div.className = 'array-item';
+            const inp = document.createElement('input');
+            inp.type = 'text';
+            inp.value = val;
+            inp.readOnly = true;
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'btn btn-danger btn-sm';
+            btn.textContent = 'Remove';
+            btn.addEventListener('click', function() { removeSkill(this, val); });
+            div.appendChild(inp);
+            div.appendChild(btn);
+            document.getElementById('skills-list').appendChild(div);
+            input.value = '';
+        }
+function removeSkill(btn, skill) { btn.parentElement.remove(); }
+        function addExperience() {
+            const role = document.getElementById('new-exp-role').value;
+            const company = document.getElementById('new-exp-company').value;
+            const period = document.getElementById('new-exp-period').value;
+            const desc = document.getElementById('new-exp-desc').value;
+            if (!role || !company) { alert('Role and Company required'); return; }
+            const div = document.createElement('div');
+            div.className = 'card';
+            div.style.cssText = 'background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);';
+            const formRow = document.createElement('div');
+            formRow.className = 'form-row';
+            const fg1 = document.createElement('div');
+            fg1.className = 'form-group';
+            const lbl1 = document.createElement('label');
+            lbl1.textContent = 'Role';
+            const inp1 = document.createElement('input');
+            inp1.type = 'text';
+            inp1.value = role;
+            fg1.appendChild(lbl1);
+            fg1.appendChild(inp1);
+            const fg2 = document.createElement('div');
+            fg2.className = 'form-group';
+            const lbl2 = document.createElement('label');
+            lbl2.textContent = 'Company';
+            const inp2 = document.createElement('input');
+            inp2.type = 'text';
+            inp2.value = company;
+            fg2.appendChild(lbl2);
+            fg2.appendChild(inp2);
+            formRow.appendChild(fg1);
+            formRow.appendChild(fg2);
+            div.appendChild(formRow);
+            const fg3 = document.createElement('div');
+            fg3.className = 'form-group';
+            const lbl3 = document.createElement('label');
+            lbl3.textContent = 'Period';
+            const inp3 = document.createElement('input');
+            inp3.type = 'text';
+            inp3.value = period;
+            fg3.appendChild(lbl3);
+            fg3.appendChild(inp3);
+            div.appendChild(fg3);
+            const fg4 = document.createElement('div');
+            fg4.className = 'form-group';
+            const lbl4 = document.createElement('label');
+            lbl4.textContent = 'Description';
+            const ta = document.createElement('textarea');
+            ta.value = desc;
+            fg4.appendChild(lbl4);
+            fg4.appendChild(ta);
+            div.appendChild(fg4);
+            document.getElementById('experience-list').appendChild(div);
+            document.getElementById('new-exp-role').value = '';
+            document.getElementById('new-exp-company').value = '';
+            document.getElementById('new-exp-period').value = '';
+            document.getElementById('new-exp-desc').value = '';
+        }
+        async function saveSettings(e) {
+            e.preventDefault();
+            const form = e.target;
+            const skills = [];
+            document.querySelectorAll('#skills-list .array-item input').forEach(inp => { if (inp.value) skills.push(inp.value); });
+            const experience = [];
+            document.querySelectorAll('#experience-list .card').forEach(card => {
+                const inputs = card.querySelectorAll('input, textarea');
+                if (inputs.length >= 4) {
+                    experience.push({ role: inputs[0].value, company: inputs[1].value, period: inputs[2].value, description: inputs[3].value });
+                }
+            });
+            const data = {
+                name: form.querySelector('[name=name]').value,
+                title: form.querySelector('[name=title]').value,
+                subtitle: form.querySelector('[name=subtitle]').value,
+                bio: form.querySelector('[name=bio]').value,
+                email: form.querySelector('[name=email]').value,
+                phone: form.querySelector('[name=phone]').value,
+                location: form.querySelector('[name=location]').value,
+                profileImage: form.querySelector('[name=profileImage]').value,
+                heroImage: form.querySelector('[name=heroImage]').value,
+                heroMedia: form.querySelector('[name=heroMedia]').value,
+                seoTitle: form.querySelector('[name=seoTitle]').value,
+                seoDescription: form.querySelector('[name=seoDescription]').value,
+                ogImage: form.querySelector('[name=ogImage]').value,
+                robots: form.querySelector('[name=robots]').value,
+                skills: skills,
+                experience: experience
+            };
+            const csrf = form.querySelector('input[name=csrf_token]').value;
+            const res = await fetch('/api/admin/settings', {
+                method: 'PUT',
+                headers: {'Content-Type': 'application/json', 'X-CSRFToken': csrf},
+                body: JSON.stringify(data)
+            });
+            if (res.ok) { alert('Settings saved'); } else { alert('Error saving settings'); }
+        }
+        async function uploadHeroImage() {
+            const form = document.getElementById("hero-image-form");
+            const fd = new FormData(form);
+            const csrf = form.querySelector('input[name=csrf_token]').value;
+            const res = await fetch('/api/admin/hero-image', { method: 'POST', headers: {'X-CSRFToken': csrf}, body: fd });
+            if (res.ok) {
+                const data = await res.json();
+                const heroInput = document.getElementById('settings-heroImage');
+                if (heroInput) heroInput.value = data.settings.heroImage || '';
+                location.reload();
+            } else {
+                const err = await res.json();
+                alert('Upload failed: ' + (err.error || 'Unknown error'));
+            }
+        }
+        async function clearHeroImage() {
+            if (!confirm('Remove hero image?')) return;
+            const csrf = document.querySelector('#hero-image-form input[name=csrf_token]').value;
+            const res = await fetch('/api/admin/hero-image/clear', { method: 'POST', headers: {'X-CSRFToken': csrf} });
+            if (res.ok) {
+                const heroInput = document.getElementById('settings-heroImage');
+                if (heroInput) heroInput.value = '';
+                location.reload();
+            } else {
+                alert('Error clearing hero image');
+            }
+        }
+        (function() {
+            const heroDropZone = document.getElementById('hero-drop-zone');
+            const heroFileInput = document.getElementById('hero-image-file');
+            const heroForm = document.getElementById('hero-image-form');
+            if (heroDropZone && heroFileInput && heroForm) {
+                let dragCounter = 0;
+                heroDropZone.addEventListener('dragenter', (e) => {
+                    e.preventDefault();
+                    dragCounter++;
+                    heroDropZone.style.borderColor = '#6366f1';
+                    heroDropZone.style.color = '#6366f1';
+                });
+                heroDropZone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                });
+                heroDropZone.addEventListener('click', () => heroFileInput.click());
+                heroDropZone.addEventListener('dragleave', () => {
+                    dragCounter--;
+                    if (dragCounter <= 0) {
+                        dragCounter = 0;
+                        heroDropZone.style.borderColor = '';
+                        heroDropZone.style.color = '';
+                    }
+                });
+                heroDropZone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    dragCounter = 0;
+                    heroDropZone.style.borderColor = '';
+                    heroDropZone.style.color = '';
+                    const files = e.dataTransfer.files;
+                    if (files.length) {
+                        heroFileInput.files = files;
+                        const nameEl = document.getElementById('hero-drop-name');
+                        if (nameEl) nameEl.textContent = files[0].name;
+                        uploadHeroImage({ preventDefault: () => {}, target: heroForm });
+                    }
+                });
+            }
+        })();
+    </script>
+</html>

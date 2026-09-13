@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skills - Admin</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #0f0f23;
+            color: #e0e0e0;
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 260px;
+            background: rgba(255,255,255,0.03);
+            border-right: 1px solid rgba(255,255,255,0.08);
+            padding: 24px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+        .sidebar-logo {
+            font-size: 22px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 32px;
+        }
+        .nav-link {
+            display: block;
+            padding: 12px 16px;
+            color: #9ca3af;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-bottom: 4px;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .nav-link:hover, .nav-link.active {
+            background: rgba(99, 102, 241, 0.1);
+            color: #6366f1;
+        }
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            padding: 32px;
+            max-width: calc(100% - 260px);
+        }
+        .page-title { font-size: 28px; font-weight: 700; margin-bottom: 24px; }
+        .card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 24px;
+        }
+        .skill-list { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 24px; }
+        .skill-tag {
+            background: rgba(99,102,241,0.1);
+            border: 1px solid rgba(99,102,241,0.2);
+            color: #6366f1;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .skill-tag button {
+            background: none;
+            border: none;
+            color: #6366f1;
+            cursor: pointer;
+            font-size: 16px;
+            line-height: 1;
+        }
+        .form-group { margin-bottom: 16px; }
+        .form-group input {
+            width: 100%;
+            padding: 10px 14px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            color: #e0e0e0;
+            font-size: 14px;
+        }
+        .btn-primary {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .hidden { display: none !important; }
+        @media (max-width: 768px) {
+            .sidebar { width: 100%; position: relative; height: auto; }
+            .main-content { margin-left: 0; max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-logo">Chirag Admin</div>
+        <a href="/admin" class="nav-link {{ 'active' if active_page == 'dashboard' }}">Dashboard</a>
+        <a href="/admin/projects" class="nav-link {{ 'active' if active_page == 'projects' }}">Projects</a>
+        <a href="/admin/categories" class="nav-link {{ 'active' if active_page == 'categories' }}">Categories</a>
+        <a href="/admin/settings" class="nav-link {{ 'active' if active_page == 'settings' }}">Settings</a>
+        <a href="/admin/media" class="nav-link {{ 'active' if active_page == 'media' }}">Media</a>
+        <a href="/admin/seo" class="nav-link {{ 'active' if active_page == 'seo' }}">SEO</a>
+        <a href="/admin/skills" class="nav-link {{ 'active' if active_page == 'skills' }}">Skills</a>
+        <a href="/admin/experience" class="nav-link {{ 'active' if active_page == 'experience' }}">Experience</a>
+        <a href="/admin/software" class="nav-link {{ 'active' if active_page == 'software' }}">Software</a>
+        <a href="/admin/logout" class="nav-link" style="color: #ef4444;">Logout</a>
+    </aside>
+    <main class="main-content">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <h1 class="page-title">Skills</h1>
+        <div class="card">
+            <div class="skill-list" id="skills-list">
+                {% for skill in skills %}
+                <div class="skill-tag">
+                    {{ skill }}
+                    <button onclick='removeSkill(this, {{ skill|tojson }})'>&times;</button>
+                </div>
+                {% endfor %}
+            </div>
+            <div style="display: flex; gap: 12px;">
+                <input type="text" id="new-skill" placeholder="Add a new skill..." style="flex: 1;">
+                <button type="button" class="btn-primary" onclick="addSkill()">Add</button>
+            </div>
+        </div>
+    </main>
+    <script>
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        function addSkill() {
+            const input = document.getElementById('new-skill');
+            const val = input.value.trim();
+            if (!val) return;
+            const div = document.createElement('div');
+            div.className = 'skill-tag';
+            div.innerHTML = val + ' <button onclick="removeSkill(this, \\'' + val + '\\')">&times;</button>';
+            document.getElementById('skills-list').appendChild(div);
+            input.value = '';
+            saveSkills();
+        }
+        function removeSkill(btn, skill) {
+            btn.parentElement.remove();
+            saveSkills();
+        }
+        async function saveSkills() {
+            const skills = [];
+            document.querySelectorAll('#skills-list .skill-tag').forEach(el => {
+                const textNode = Array.from(el.childNodes).find(n => n.nodeType === Node.TEXT_NODE);
+                skills.push(textNode ? textNode.textContent.trim() : '');
+            });
+            const csrf = document.querySelector('input[name=csrf_token]').value;
+            await fetch('/api/admin/settings/skills', {
+                method: 'PUT',
+                headers: {'Content-Type': 'application/json', 'X-CSRFToken': csrf},
+                body: JSON.stringify(skills)
+            });
+        }
+    </script>
+</body>
+</html>

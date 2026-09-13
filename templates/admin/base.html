@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Chirag Mahendru</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #0f0f23;
+            color: #e0e0e0;
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 260px;
+            background: rgba(255,255,255,0.03);
+            border-right: 1px solid rgba(255,255,255,0.08);
+            padding: 24px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+        .sidebar-logo {
+            font-size: 22px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 32px;
+        }
+        .nav-link {
+            display: block;
+            padding: 12px 16px;
+            color: #9ca3af;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-bottom: 4px;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .nav-link:hover, .nav-link.active {
+            background: rgba(99, 102, 241, 0.1);
+            color: #6366f1;
+        }
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            padding: 32px;
+        }
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+        .page-title {
+            font-size: 28px;
+            font-weight: 700;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+        @media (min-width: 769px) {
+            .stats-grid { grid-template-columns: repeat(4, 1fr); }
+        }
+        .stat-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 24px;
+        }
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .stat-label {
+            color: #9ca3af;
+            font-size: 14px;
+            margin-top: 4px;
+        }
+        .quick-actions {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 32px;
+        }
+        .quick-actions h3 { margin-bottom: 16px; font-size: 18px; color: #e0e0e0; }
+        .quick-actions .btn { text-decoration: none; }
+        @media (max-width: 768px) {
+            .sidebar { width: 100%; position: relative; height: auto; }
+            .main-content { margin-left: 0; max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-logo">Chirag Admin</div>
+        <a href="/admin" class="nav-link {{ 'active' if active_page == 'dashboard' }}">Dashboard</a>
+        <a href="/admin/projects" class="nav-link {{ 'active' if active_page == 'projects' }}">Projects</a>
+        <a href="/admin/categories" class="nav-link {{ 'active' if active_page == 'categories' }}">Categories</a>
+        <a href="/admin/settings" class="nav-link {{ 'active' if active_page == 'settings' }}">Settings</a>
+        <a href="/admin/media" class="nav-link {{ 'active' if active_page == 'media' }}">Media</a>
+        <a href="/admin/seo" class="nav-link {{ 'active' if active_page == 'seo' }}">SEO</a>
+        <a href="/admin/skills" class="nav-link {{ 'active' if active_page == 'skills' }}">Skills</a>
+        <a href="/admin/experience" class="nav-link {{ 'active' if active_page == 'experience' }}">Experience</a>
+        <a href="/admin/software" class="nav-link {{ 'active' if active_page == 'software' }}">Software</a>
+        <a href="/admin/logout" class="nav-link" style="color: #ef4444;">Logout</a>
+    </aside>
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>
