@@ -1002,100 +1002,145 @@
             showProjectDetail(projectId);
         }
     }
+    function buildProjectImages(project) {
+        var images = [];
+        var seen = {};
+        var cover = project.coverImage || project.heroImage || '';
+        if (cover) {
+            images.push(cover);
+            seen[cover] = true;
+        }
+        if (project.heroImage && !seen[project.heroImage]) {
+            images.push(project.heroImage);
+            seen[project.heroImage] = true;
+        }
+        if (project.gallery && Array.isArray(project.gallery)) {
+            project.gallery.forEach(function(url) {
+                if (url && !seen[url]) {
+                    images.push(url);
+                    seen[url] = true;
+                }
+            });
+        }
+        return images;
+    }
 
     function showProjectDetail(projectId) {
-        const project = projects.find(p => (p.id === projectId || p.slug === projectId));
+        var project = projects.find(function(p) { return (p.id === projectId || p.slug === projectId); });
         if (!project) return;
 
-        const modal = document.getElementById('project-detail-modal');
-        const mediaEl = modal.querySelector('.project-detail-media');
-        const galleryEl = modal.querySelector('.project-detail-gallery');
-        const infoEl = modal.querySelector('.project-detail-info');
-        const videoEl = modal.querySelector('.project-detail-video');
+        var modal = document.getElementById('project-detail-modal');
+        if (!modal) return;
 
-        const imagesContent = document.createElement('div');
-        imagesContent.className = 'project-detail-tab-content active';
-        const videosContent = document.createElement('div');
-        videosContent.className = 'project-detail-tab-content';
+        var images = buildProjectImages(project);
+        var coverImage = images.length > 0 ? images[0] : '';
 
-        const cover = project.coverImage || project.heroImage || '';
-        let imagesHtml = '';
-        if (cover) {
-            imagesHtml += '<img src="' + cover + '" alt="' + project.title + '" style="width:100%;border-radius:8px;margin-bottom:12px;">';
+        // Build the full modal content in a single fragment
+        var html = '';
+
+        // Images tab — hero + thumbnail strip
+        html += '<div class="project-detail-tab-content active" data-tab-content="images">';
+        if (coverImage) {
+            html += '<div class="project-detail-hero-wrapper">';
+            html += '<img class="project-detail-hero-image" src="' + coverImage + '" alt="' + project.title + '">';
+            html += '</div>';
         }
-        if (project.gallery && project.gallery.length) {
-            imagesHtml += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;">';
-            project.gallery.forEach(item => {
-                const url = typeof item === 'string' ? item : item.url;
-                imagesHtml += '<img src="' + url + '" style="width:100%;height:120px;object-fit:cover;border-radius:8px;">';
+        if (images.length > 1) {
+            html += '<div class="project-detail-thumbnails-strip">';
+            images.forEach(function(url, idx) {
+                var activeClass = idx === 0 ? ' project-detail-thumb-active' : '';
+                html += '<img class="project-detail-thumb' + activeClass + '" src="' + url + '" alt="Thumbnail ' + (idx + 1) + '" data-index="' + idx + '" data-url="' + url + '">';
             });
-            imagesHtml += '</div>';
+            html += '</div>';
         }
-        imagesContent.innerHTML = imagesHtml || '<p style="color:var(--text-muted);padding:20px;">No images available.</p>';
+        html += '</div>';
 
-        let videosHtml = '';
+        // Videos tab
+        html += '<div class="project-detail-tab-content" data-tab-content="videos">';
         if (project.video) {
-            videosHtml += '<video controls style="width:100%;border-radius:8px;margin-bottom:12px;"><source src="' + project.video + '" type="video/mp4"></video>';
+            html += '<video controls class="project-detail-video-player"><source src="' + project.video + '" type="video/mp4"></video>';
         }
         if (project.vrVideo) {
-            videosHtml += '<video controls style="width:100%;border-radius:8px;"><source src="' + project.vrVideo + '" type="video/mp4"></video>';
+            html += '<video controls class="project-detail-video-player"><source src="' + project.vrVideo + '" type="video/mp4"></video>';
         }
-        videosContent.innerHTML = videosHtml || '<p style="color:var(--text-muted);padding:20px;">No videos available.</p>';
-
-        if (infoEl) {
-            infoEl.innerHTML = '<h2 class="project-detail-title">' + project.title + '</h2>' +
-                '<p class="project-detail-description">' + (project.description || '') + '</p>' +
-                '<div class="project-detail-tags">' + (project.software || []).map(tag => '<span class="tag">' + tag + '</span>').join('') + '</div>';
+        if (!project.video && !project.vrVideo) {
+            html += '<p style="color:var(--text-muted);padding:20px;">No videos available.</p>';
         }
+        html += '</div>';
 
-        const content = modal.querySelector('.project-detail-content');
-        
-        const oldTabs = content.querySelectorAll('.project-detail-tab-content');
-        oldTabs.forEach(t => t.remove());
-        
-        const oldTabBar = content.querySelector('.project-detail-tabs');
-        if (oldTabBar) oldTabBar.remove();
+        // Tab bar
+        html += '<div class="project-detail-tabs">';
+        html += '<button class="project-detail-tab active" data-tab="images">Images</button>';
+        html += '<button class="project-detail-tab" data-tab="videos">Videos</button>';
+        html += '</div>';
 
-        const closeBtn = content.querySelector('.project-detail-close');
-        const tabBar = document.createElement('div');
-        tabBar.className = 'project-detail-tabs';
-        tabBar.innerHTML = '<button class="project-detail-tab active" data-tab="images">Images</button>' +
-            '<button class="project-detail-tab" data-tab="videos">Videos</button>';
-        content.insertBefore(tabBar, mediaEl);
+        // Info
+        html += '<div class="project-detail-info">';
+        html += '<h2 class="project-detail-title">' + project.title + '</h2>';
+        html += '<p class="project-detail-description">' + (project.description || '') + '</p>';
+        html += '<div class="project-detail-tags">' + (project.software || []).map(function(tag) { return '<span class="tag">' + tag + '</span>'; }).join('') + '</div>';
+        html += '</div>';
 
-        if (mediaEl) mediaEl.innerHTML = '';
-        if (galleryEl) galleryEl.innerHTML = '';
-        if (videoEl) videoEl.innerHTML = '';
+        // Inject into modal
+        var content = modal.querySelector('.project-detail-content');
+        content.innerHTML = html;
 
-        if (videoEl) {
-            videoEl.parentNode.insertBefore(imagesContent, videoEl);
-            videoEl.parentNode.insertBefore(videosContent, videoEl);
-        } else if (infoEl) {
-            infoEl.parentNode.insertBefore(imagesContent, infoEl);
-            infoEl.parentNode.insertBefore(videosContent, infoEl);
-        }
-
-        tabBar.querySelectorAll('.project-detail-tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                tabBar.querySelectorAll('.project-detail-tab').forEach(t => t.classList.remove('active'));
+        // Wire tab switching
+        content.querySelectorAll('.project-detail-tab').forEach(function(tab) {
+            tab.addEventListener('click', function() {
+                content.querySelectorAll('.project-detail-tab').forEach(function(t) { t.classList.remove('active'); });
                 tab.classList.add('active');
-                const tabName = tab.dataset.tab;
-                document.querySelectorAll('.project-detail-tab-content').forEach(c => c.classList.remove('active'));
-                if (tabName === 'images') imagesContent.classList.add('active');
-                if (tabName === 'videos') videosContent.classList.add('active');
+                var tabName = tab.dataset.tab;
+                content.querySelectorAll('.project-detail-tab-content').forEach(function(c) { c.classList.remove('active'); });
+                var target = content.querySelector('[data-tab-content="' + tabName + '"]');
+                if (target) target.classList.add('active');
             });
         });
 
-        const closeBtnHandler = modal.querySelector('.project-detail-close');
-        if (closeBtnHandler) {
-            closeBtnHandler.onclick = () => {
+        // Wire thumbnail click ? instant hero swap (no reload, no network fetch)
+        var heroImg = content.querySelector('.project-detail-hero-image');
+        content.querySelectorAll('.project-detail-thumb').forEach(function(thumb) {
+            thumb.addEventListener('click', function(e) {
+                e.stopPropagation();
+                var newUrl = thumb.dataset.url;
+                if (heroImg && newUrl) {
+                    heroImg.src = newUrl;
+                }
+                content.querySelectorAll('.project-detail-thumb').forEach(function(t) { t.classList.remove('project-detail-thumb-active'); });
+                thumb.classList.add('project-detail-thumb-active');
+            });
+        });
+
+        // Close handler
+        var closeBtn = modal.querySelector('.project-detail-close');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', function() {
                 modal.style.display = 'none';
-                const tabsToRemove = modal.querySelectorAll('.project-detail-tab-content');
-                tabsToRemove.forEach(t => t.remove());
-                const tabBarToRemove = modal.querySelector('.project-detail-tabs');
-                if (tabBarToRemove) tabBarToRemove.remove();
-            };
+                // Clear images to stop any video playback inside the modal
+                var heroWrapper = modal.querySelector('.project-detail-hero-wrapper');
+                if (heroWrapper) heroWrapper.innerHTML = '';
+            });
         }
+
+        // Close on backdrop click
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+                var heroWrapper = modal.querySelector('.project-detail-hero-wrapper');
+                if (heroWrapper) heroWrapper.innerHTML = '';
+            }
+        });
+
+        // Close on Escape key
+        function onEscKey(e) {
+            if (e.key === 'Escape') {
+                modal.style.display = 'none';
+                var heroWrapper = modal.querySelector('.project-detail-hero-wrapper');
+                if (heroWrapper) heroWrapper.innerHTML = '';
+                document.removeEventListener('keydown', onEscKey);
+            }
+        }
+        document.addEventListener('keydown', onEscKey);
 
         modal.style.display = 'flex';
     }
