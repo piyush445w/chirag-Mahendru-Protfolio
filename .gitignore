@@ -1,0 +1,21 @@
+﻿# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.flaskenv
+
+# Data and uploads (keep directory structure)
+data/*.json
+!data/.gitkeep
+uploads/
+!uploads/.gitkeep
+
+# Large media files
+public/*.mp4

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categories - Admin</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #0f0f23;
+            color: #e0e0e0;
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 260px;
+            background: rgba(255,255,255,0.03);
+            border-right: 1px solid rgba(255,255,255,0.08);
+            padding: 24px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+        .sidebar-logo {
+            font-size: 22px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 32px;
+        }
+        .nav-link {
+            display: block;
+            padding: 12px 16px;
+            color: #9ca3af;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-bottom: 4px;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .nav-link:hover, .nav-link.active {
+            background: rgba(99, 102, 241, 0.1);
+            color: #6366f1;
+        }
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            padding: 32px;
+            max-width: calc(100% - 260px);
+        }
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+        .page-title { font-size: 28px; font-weight: 700; }
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+        }
+        .btn-danger {
+            background: rgba(239, 68, 68, 0.1);
+            color: #fca5a5;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+        .btn-secondary {
+            background: rgba(255,255,255,0.1);
+            color: #e0e0e0;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        .form-group { margin-bottom: 16px; }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px 14px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            color: #e0e0e0;
+            font-size: 14px;
+        }
+        table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 14px; }
+        th { color: #9ca3af; font-weight: 600; text-transform: uppercase; font-size: 12px; }
+        .actions { display: flex; gap: 8px; }
+        .hidden { display: none !important; }
+        @media (max-width: 768px) {
+            .sidebar { width: 100%; position: relative; height: auto; }
+            .main-content { margin-left: 0; max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-logo">Chirag Admin</div>
+        <a href="/admin" class="nav-link {{ 'active' if active_page == 'dashboard' }}">Dashboard</a>
+        <a href="/admin/projects" class="nav-link {{ 'active' if active_page == 'projects' }}">Projects</a>
+        <a href="/admin/categories" class="nav-link {{ 'active' if active_page == 'categories' }}">Categories</a>
+        <a href="/admin/settings" class="nav-link {{ 'active' if active_page == 'settings' }}">Settings</a>
+        <a href="/admin/media" class="nav-link {{ 'active' if active_page == 'media' }}">Media</a>
+        <a href="/admin/seo" class="nav-link {{ 'active' if active_page == 'seo' }}">SEO</a>
+        <a href="/admin/skills" class="nav-link {{ 'active' if active_page == 'skills' }}">Skills</a>
+        <a href="/admin/experience" class="nav-link {{ 'active' if active_page == 'experience' }}">Experience</a>
+        <a href="/admin/software" class="nav-link {{ 'active' if active_page == 'software' }}">Software</a>
+        <a href="/admin/logout" class="nav-link" style="color: #ef4444;">Logout</a>
+    </aside>
+    <main class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">Categories</h1>
+            <button class="btn btn-primary" onclick="showForm()">Add Category</button>
+        </div>
+        <div id="cat-form" class="card hidden">
+            <h3 style="margin-bottom: 20px;" id="form-title">Add Category</h3>
+            <form id="category-form" onsubmit="saveCategory(event)">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="edit_id" id="cat-edit-id" value="">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" name="name" id="cat-name" required>
+                </div>
+                <div class="form-group">
+                    <label>Slug</label>
+                    <input type="text" name="slug" id="cat-slug" required>
+                </div>
+                <div style="display: flex; gap: 12px;">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary" onclick="hideForm()">Cancel</button>
+                </div>
+            </form>
+        </div>
+        <div class="card">
+            <table>
+                <thead>
+                    <tr><th>Name</th><th>Slug</th><th>Actions</th></tr>
+                </thead>
+                <tbody>
+                    {% for c in categories %}
+                    <tr>
+                        <td>{{ c.name }}</td>
+                        <td>{{ c.slug }}</td>
+                        <td>
+                            <div class="actions">
+                                <button class="btn btn-secondary" onclick="editCategory('{{ c.id }}')">Edit</button>
+                                <button class="btn btn-danger" onclick="deleteCategory('{{ c.id }}')">Delete</button>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <script>
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        function showForm() { document.getElementById('cat-form').classList.remove('hidden'); }
+        function hideForm() { document.getElementById('cat-form').classList.add('hidden'); resetForm(); }
+        function resetForm() {
+            document.getElementById('category-form').reset();
+            document.getElementById('cat-edit-id').value = '';
+            document.getElementById('form-title').textContent = 'Add Category';
+        }
+        async function saveCategory(e) {
+            e.preventDefault();
+            const editId = document.getElementById('cat-edit-id').value;
+            const csrf = document.querySelector('input[name=csrf_token]').value;
+            const data = { name: document.getElementById('cat-name').value, slug: document.getElementById('cat-slug').value };
+            const url = editId ? '/api/admin/categories/' + encodeURIComponent(editId) : '/api/admin/categories';
+            const method = editId ? 'PUT' : 'POST';
+            const res = await fetch(url, { method, headers: {'Content-Type': 'application/json', 'X-CSRFToken': csrf}, body: JSON.stringify(data) });
+            if (res.ok) { location.reload(); } else { alert('Error saving category'); }
+        }
+        async function editCategory(id) {
+            const res = await fetch('/api/admin/categories');
+            const cats = await res.json();
+            const c = cats.find(x => x.id === id);
+            if (!c) return;
+            document.getElementById('cat-edit-id').value = c.id;
+            document.getElementById('cat-name').value = c.name;
+            document.getElementById('cat-slug').value = c.slug;
+            document.getElementById('form-title').textContent = 'Edit Category';
+            document.getElementById('cat-form').classList.remove('hidden');
+        }
+        async function deleteCategory(id) {
+            if (!confirm('Are you sure?')) return;
+            const csrf = document.querySelector('input[name=csrf_token]').value;
+            const res = await fetch('/api/admin/categories/' + encodeURIComponent(id), { method: 'DELETE', headers: {'X-CSRFToken': csrf} });
+            if (res.ok) { location.reload(); } else { alert('Error deleting category'); }
+        }
+    </script>
+</body>
+</html>

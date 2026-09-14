@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experience - Admin</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #0f0f23;
+            color: #e0e0e0;
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 260px;
+            background: rgba(255,255,255,0.03);
+            border-right: 1px solid rgba(255,255,255,0.08);
+            padding: 24px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+        .sidebar-logo {
+            font-size: 22px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 32px;
+        }
+        .nav-link {
+            display: block;
+            padding: 12px 16px;
+            color: #9ca3af;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-bottom: 4px;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .nav-link:hover, .nav-link.active {
+            background: rgba(99, 102, 241, 0.1);
+            color: #6366f1;
+        }
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            padding: 32px;
+            max-width: calc(100% - 260px);
+        }
+        .page-title { font-size: 28px; font-weight: 700; margin-bottom: 24px; }
+        .card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        .form-group { margin-bottom: 16px; }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px 14px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            color: #e0e0e0;
+            font-size: 14px;
+            font-family: inherit;
+        }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 14px; }
+        th { color: #9ca3af; font-weight: 600; text-transform: uppercase; font-size: 12px; }
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+        }
+        .btn-secondary {
+            background: rgba(255,255,255,0.1);
+            color: #e0e0e0;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .btn-danger {
+            background: rgba(239, 68, 68, 0.1);
+            color: #fca5a5;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+        .hidden { display: none !important; }
+        @media (max-width: 768px) {
+            .sidebar { width: 100%; position: relative; height: auto; }
+            .main-content { margin-left: 0; max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-logo">Chirag Admin</div>
+        <a href="/admin" class="nav-link {{ 'active' if active_page == 'dashboard' }}">Dashboard</a>
+        <a href="/admin/projects" class="nav-link {{ 'active' if active_page == 'projects' }}">Projects</a>
+        <a href="/admin/categories" class="nav-link {{ 'active' if active_page == 'categories' }}">Categories</a>
+        <a href="/admin/settings" class="nav-link {{ 'active' if active_page == 'settings' }}">Settings</a>
+        <a href="/admin/media" class="nav-link {{ 'active' if active_page == 'media' }}">Media</a>
+        <a href="/admin/seo" class="nav-link {{ 'active' if active_page == 'seo' }}">SEO</a>
+        <a href="/admin/skills" class="nav-link {{ 'active' if active_page == 'skills' }}">Skills</a>
+        <a href="/admin/experience" class="nav-link {{ 'active' if active_page == 'experience' }}">Experience</a>
+        <a href="/admin/software" class="nav-link {{ 'active' if active_page == 'software' }}">Software</a>
+        <a href="/admin/logout" class="nav-link" style="color: #ef4444;">Logout</a>
+    </aside>
+    <main class="main-content">
+        <h1 class="page-title">Experience</h1>
+        <div id="exp-form" class="card">
+            <h3 style="margin-bottom: 20px;" id="exp-form-title">Add Experience</h3>
+            <form id="experience-form" onsubmit="saveExperience(event)">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="edit_index" id="exp-edit-index" value="">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Role</label>
+                        <input type="text" name="role" id="exp-role" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Company</label>
+                        <input type="text" name="company" id="exp-company" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Period</label>
+                    <input type="text" name="period" id="exp-period" placeholder="Jan 2020 - Present">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea name="description" id="exp-desc" rows="3"></textarea>
+                </div>
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" name="current" id="exp-current">
+                    <label for="exp-current">Current</label>
+                </div>
+                <div style="display: flex; gap: 12px;">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary" onclick="hideExpForm()">Cancel</button>
+                </div>
+            </form>
+        </div>
+        <div class="card">
+            <table>
+                <thead>
+                    <tr><th>Role</th><th>Company</th><th>Period</th><th>Actions</th></tr>
+                </thead>
+                <tbody>
+                    {% for idx, exp in enumerate(experience_list) %}
+                    <tr>
+                        <td>{{ exp.role }}</td>
+                        <td>{{ exp.company }}</td>
+                        <td>{{ exp.period }}</td>
+                        <td>
+                            <div class="actions">
+                                <button class="btn btn-secondary" onclick="editExperience({{ idx }})">Edit</button>
+                                <button class="btn btn-danger" onclick="deleteExperience({{ idx }})">Delete</button>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <script>
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        function hideExpForm() { document.getElementById('exp-form').classList.add('hidden'); resetExpForm(); }
+        function resetExpForm() {
+            document.getElementById('experience-form').reset();
+            document.getElementById('exp-edit-index').value = '';
+            document.getElementById('exp-form-title').textContent = 'Add Experience';
+        }
+        async function saveExperience(e) {
+            e.preventDefault();
+            const editIndex = document.getElementById('exp-edit-index').value;
+            const data = {
+                role: document.getElementById('exp-role').value,
+                company: document.getElementById('exp-company').value,
+                period: document.getElementById('exp-period').value,
+                description: document.getElementById('exp-desc').value,
+                current: !!document.getElementById('exp-current').checked
+            };
+            const url = editIndex !== '' ? '/api/admin/settings/experience/' + editIndex : '/api/admin/settings/experience';
+            const method = editIndex !== '' ? 'PUT' : 'POST';
+            const csrf = document.querySelector('input[name=csrf_token]').value;
+            const res = await fetch(url, { method: method, headers: {'Content-Type': 'application/json', 'X-CSRFToken': csrf}, body: JSON.stringify(data) });
+            if (res.ok) { location.reload(); } else { alert('Error saving experience'); }
+        }
+        async function editExperience(idx) {
+            const res = await fetch('/api/admin/settings/experience');
+            const list = await res.json();
+            const exp = list[idx];
+            if (!exp) return;
+            document.getElementById('exp-edit-index').value = idx;
+            document.getElementById('exp-role').value = exp.role || '';
+            document.getElementById('exp-company').value = exp.company || '';
+            document.getElementById('exp-period').value = exp.period || '';
+            document.getElementById('exp-desc').value = exp.description || '';
+            document.getElementById('exp-current').checked = !!exp.current;
+            document.getElementById('exp-form-title').textContent = 'Edit Experience';
+            document.getElementById('exp-form').classList.remove('hidden');
+        }
+        async function deleteExperience(idx) {
+            if (!confirm('Are you sure?')) return;
+            const csrf = document.querySelector('input[name=csrf_token]').value;
+            const res = await fetch('/api/admin/settings/experience/' + idx, { method: 'DELETE', headers: {'X-CSRFToken': csrf} });
+            if (res.ok) { location.reload(); } else { alert('Error deleting experience'); }
+        }
+    </script>
+</body>
+</html>

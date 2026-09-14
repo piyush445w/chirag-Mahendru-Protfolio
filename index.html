@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Chirag Mahendru - 3D Environment Artist specializing in modeling, texturing, lighting, and rendering">
+    <meta name="author" content="Chirag Mahendru">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Chirag Mahendru - 3D Environment Artist">
+    <meta property="og:description" content="Crafting Beyond Imagination - 3D Artist specializing in modeling, texturing, lighting, and rendering">
+    <meta property="og:type" content="website">
+    <title>Chirag Mahendru - 3D Environment Artist</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <div id="loader" class="loader">
+        <div class="loader-spinner">
+            <div class="spinner-ring spinner-ring-outer"></div>
+            <div class="spinner-ring spinner-ring-inner"></div>
+        </div>
+        <p id="loader-text" class="loader-text">Loading Experience</p>
+    </div>
+
+    <div id="cursor" class="cursor-follower"></div>
+    <div id="cursor-blur" class="cursor-dot"></div>
+
+    <div class="scroll-progress-bar">
+        <div id="scroll-progress" class="scroll-progress"></div>
+    </div>
+
+    <div id="particles" class="particles-container"></div>
+
+    <div class="ambient-glow">
+        <div class="glow glow-blue"></div>
+        <div class="glow glow-purple"></div>
+        <div class="glow glow-cyan"></div>
+    </div>
+
+    <nav id="navbar" class="navbar" role="navigation">
+        <a href="#hero" class="logo">
+            <span class="logo-name">Chirag</span><span class="logo-dot">.</span>
+        </a>
+        <div class="nav-links">
+            <a href="#hero" class="nav-link">Home</a>
+            <a href="#about" class="nav-link">About</a>
+            <a href="#work" class="nav-link">Work</a>
+            <a href="#resume" class="nav-link">Resume</a>
+            <a href="#services" class="nav-link">Services</a>
+            <a href="#contact" class="nav-link">Contact</a>
+        </div>
+        <button id="menu-btn" class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+            <svg id="menu-icon" class="icon-menu" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+            <svg id="close-icon" class="icon-close hidden" aria-label="Close menu" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+    </nav>
+
+    <div id="mobile-menu" class="mobile-menu">
+        <div class="mobile-menu-bg">
+            <div class="mobile-glow mobile-glow-blue"></div>
+            <div class="mobile-glow mobile-glow-purple"></div>
+        </div>
+        <a href="#hero" class="mobile-link">Home</a>
+        <a href="#about" class="mobile-link">About</a>
+        <a href="#work" class="mobile-link">Work</a>
+        <a href="#resume" class="mobile-link">Resume</a>
+        <a href="#services" class="mobile-link">Services</a>
+        <a href="#contact" class="mobile-link">Contact</a>
+        <div class="mobile-divider"></div>
+        <p class="mobile-year">Portfolio 2025</p>
+    </div>
+
+    <main id="main-content" role="main">
+
+        <section id="hero" class="hero-section">
+            <div class="video-container">
+                <video id="hero-video" autoplay muted loop playsinline class="hero-video" poster="images/project-placeholder.svg">
+                    <source src="assets/Create_a_cinematic_photoreali.mp4" type="video/mp4">
+                </video>
+                <div class="video-overlay-bottom"></div>
+                <div class="video-overlay-sides"></div>
+            </div>
+
+            <div id="hero-content" class="hero-content">
+                <div class="hero-badge">
+                    <span class="hero-badge-text">3D Environment Artist</span>
+                </div>
+                <h1 id="hero-title" class="hero-title">
+                    <span class="title-line">Crafting</span>
+                    <span class="title-line title-italic">Beyond</span>
+                    <span class="title-line">Imagination</span>
+                </h1>
+                <p id="hero-subtitle" class="hero-subtitle">
+                    Maya - Blender - Unreal Engine - Substance Painter - ZBrush - 3ds Max
+                </p>
+                <div id="hero-cta" class="hero-cta">
+                    <a href="#work" class="btn btn-primary-light">
+                        <span class="btn-text">View Work</span>
+                    </a>
+                    <a href="#contact" class="btn btn-outline-light">Get In Touch</a>
+                </div>
+            </div>
+
+            <div class="scroll-indicator" id="scroll-indicator">
+                <span class="scroll-text">Scroll</span>
+                <div class="scroll-line">
+                    <div class="scroll-line-inner"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about-section">
+            <div class="section-bg-gradient"></div>
+            <div class="section-container">
+                <div class="section-header">
+                    <span class="section-label">Introduction</span>
+                    <h2 class="section-title">About<span class="title-dot">.</span></h2>
+                    <div class="section-divider"></div>
+                </div>
+                <div class="about-grid">
+                    <div class="about-content">
+                        <h2 id="about-name" class="about-name"></h2>
+                        <p id="about-bio" class="about-bio"></p>
+                        <div id="about-tools" class="about-tools"></div>
+                        <div id="skills-container" class="skills-container"></div>
+                        <div id="process-container" class="process-container"></div>
+                        <div class="education-card">
+                            <h3 class="education-title">Education & Specialization</h3>
+                            <div id="education-content" class="education-content"></div>
+                        </div>
+                    </div>
+                    <div class="about-image-wrapper">
+                        <div class="about-image-container">
+                            <div class="about-placeholder">
+                                <span class="about-placeholder-text">3D Artist</span>
+                            </div>
+                            <img id="about-image" class="about-image" alt="" style="display:none;">
+                            <div class="about-image-overlay"></div>
+                            <div class="about-image-info">
+                                <p class="about-image-label">Based in</p>
+                                <p id="about-location" class="about-image-name">Punjab, India</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="work" class="section-projects">
+            <div class="section-container">
+                <div class="section-header">
+                    <span class="section-label">Selected Work</span>
+                    <h2 class="section-title">Projects<span class="title-dot">.</span></h2>
+                    <div class="section-divider"></div>
+                </div>
+<div id="media-filters" class="media-filters"></div>
+                <div id="category-filters" class="category-filters"></div>
+                <div id="projects-container" aria-live="polite" class="projects-grid"></div>
+                <div id="projects-empty" class="projects-empty hidden">
+                    <p class="projects-empty-text">Projects will appear here once loaded.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="resume" class="section-resume">
+            <div class="section-bg-gradient"></div>
+            <div class="section-container">
+                <div class="section-header">
+                    <span class="section-label">Experience</span>
+                    <h2 class="section-title">Resume<span class="title-dot">.</span></h2>
+                    <div class="section-divider"></div>
+                </div>
+                <div class="resume-grid">
+                    <div class="resume-header resume-card">
+                        <h3 id="resume-name" class="resume-name"></h3>
+                        <p id="resume-title" class="resume-job-title"></p>
+                        <div class="resume-contact">
+                            <span id="resume-email" class="resume-contact-item"></span>
+                            <span class="resume-contact-separator">|</span>
+                            <span id="resume-location" class="resume-contact-item"></span>
+                        </div>
+                    </div>
+                    <div class="resume-summary resume-card">
+                        <h4 class="resume-section-title">Summary</h4>
+                        <p id="resume-summary" class="resume-summary-text"></p>
+                    </div>
+                    <div class="resume-experience resume-section-animate" data-animate-stagger="120">
+                        <h4 class="resume-section-title">Experience</h4>
+                        <div id="resume-experience-list" class="resume-experience-list"></div>
+                    </div>
+                    <div class="resume-awards resume-section-animate" data-animate-stagger="100">
+                        <h4 class="resume-section-title">Awards</h4>
+                        <div id="awards-container" class="awards-container">
+                            <div id="awards-list" class="awards-list"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="section-skills">
+            <div class="section-bg-gradient"></div>
+            <div class="section-container">
+                <div class="section-header">
+                    <span class="section-label">Technical Proficiency</span>
+                    <h2 class="section-title">Skills<span class="title-dot">.</span></h2>
+                    <div class="section-divider"></div>
+                </div>
+                <div id="skills-categories" class="skills-categories"></div>
+                <div class="marquee-section">
+                    <div class="marquee-container">
+                        <div id="software-marquee" class="marquee-track"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="services" class="section-services">
+            <div class="section-container">
+                <div class="section-header">
+                    <span class="section-label">What I Offer</span>
+                    <h2 class="section-title">Services<span class="title-dot">.</span></h2>
+                    <div class="section-divider"></div>
+                </div>
+                <div id="services-container" class="services-grid"></div>
+            </div>
+        </section>
+
+        <section id="contact" class="section-contact">
+            <div class="section-container">
+                <div class="section-header">
+                    <span class="section-label">Get In Touch</span>
+                    <h2 class="section-title">Contact<span class="title-dot">.</span></h2>
+                    <div class="section-divider"></div>
+                </div>
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <p class="contact-description">
+                            Interested in collaboration, freelance work, or just want to connect? I am always open to discussing new projects and creative ideas.
+                        </p>
+                        <div class="contact-details">
+                            <div class="contact-item">
+                                <p class="contact-label">Email</p>
+                                <a id="contact-email" href="mailto:mahendruchirag901@gmail.com" class="contact-link">mahendruchirag901@gmail.com</a>
+                            </div>
+                            <div class="contact-item">
+                                <p class="contact-label">Phone</p>
+                                <a id="contact-phone" href="tel:7719661103" class="contact-link">7719661103</a>
+                            </div>
+                            <div class="contact-item">
+                                <p class="contact-label">LinkedIn</p>
+                                <a id="contact-linkedin" href="https://www.linkedin.com/in/chiragmahendru7622/" target="_blank" rel="noopener noreferrer" class="contact-link">linkedin.com/in/chiragmahendru7622</a>
+                            </div>
+                            <div class="contact-item">
+                                <p class="contact-label">Location</p>
+                                <p id="contact-location" class="contact-location-text">Punjab, India</p>
+                            </div>
+                        </div>
+                        <div id="contact-socials" class="contact-socials"></div>
+                    </div>
+                    <div class="contact-form-wrapper">
+                        <form id="contact-form" class="contact-form">
+                            <div class="form-group">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" id="name" name="name" required class="form-input" placeholder="Your name">
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" id="email" name="email" required class="form-input" placeholder="your@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="subject" class="form-label">Subject</label>
+                                <input type="text" id="subject" name="subject" required class="form-input" placeholder="Project inquiry">
+                            </div>
+                            <div class="form-group">
+                                <label for="message" class="form-label">Message</label>
+                                <textarea id="message" name="message" rows="5" required class="form-textarea" placeholder="Tell me about your project..."></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-submit">
+                                <span class="btn-text">Send Message</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+    </main>
+    
+    <div id="project-detail-modal" class="project-detail-overlay" style="display:none;">
+        <button class="project-detail-close" aria-label="Close project detail">&times;</button>
+        <div class="project-detail-content">
+            <div class="project-detail-media"></div>
+            <div class="project-detail-gallery"></div>
+            <div class="project-detail-info"></div>
+            <div class="project-detail-video"></div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="footer-brand">Chirag Mahendru - 3D Environment Artist</p>
+            <div class="footer-socials" id="footer-socials"></div>
+            <p class="footer-copy">All rights reserved</p>
+        </div>
+    
+    </footer>
+
+    <script>
+        (function() {
+            var MAX_WAIT = 8000;
+            var startTime = Date.now();
+            function forceHide() {
+                var loader = document.getElementById('loader');
+                if (!loader) return;
+                var elapsed = Date.now() - startTime;
+                if (elapsed > MAX_WAIT && !loader.classList.contains('hidden')) {
+                    console.warn('[Fallback] Force-hiding loader after ' + elapsed + 'ms');
+                    loader.classList.add('hidden');
+                    setTimeout(function() {
+                        if (loader) loader.style.display = 'none';
+                    }, 800);
+                }
+            }
+            var interval = setInterval(function() {
+                var loader = document.getElementById('loader');
+                if (!loader || loader.classList.contains('hidden')) {
+                    clearInterval(interval);
+                    return;
+                }
+                forceHide();
+            }, 500);
+            setTimeout(function() {
+                clearInterval(interval);
+                forceHide();
+            }, MAX_WAIT);
+        })();
+    </script>
+
+    <script src="app.js?v=3"></script>
+</body>
+</html>
+
+
+
+
+
+
