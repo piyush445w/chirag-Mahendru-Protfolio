@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -164,6 +164,7 @@
                     <h2 class="section-title">Projects<span class="title-dot">.</span></h2>
                     <div class="section-divider"></div>
                 </div>
+<div id="media-filters" class="media-filters"></div>
                 <div id="category-filters" class="category-filters"></div>
                 <div id="projects-container" aria-live="polite" class="projects-grid"></div>
                 <div id="projects-empty" class="projects-empty hidden">
@@ -308,6 +309,10 @@
     
     <div id="project-detail-modal" class="project-detail-overlay" style="display:none;">
         <div class="project-detail-content">
+            <div class="project-detail-tabs">
+                <button class="project-detail-tab active" data-tab="images">Images</button>
+                <button class="project-detail-tab" data-tab="videos">Videos</button>
+            </div>
             <button class="project-detail-close" aria-label="Close project detail">&times;</button>
             <div class="project-detail-media"></div>
             <div class="project-detail-gallery"></div>
@@ -358,4 +363,6 @@
     <script src="app.js?v=3"></script>
 </body>
 </html>
+
+
 

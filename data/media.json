@@ -7,5 +7,23 @@
     "size": 188663,
     "type": "jpeg",
     "createdAt": "2026-09-11T18:17:43Z"
+  },
+  {
+    "id": "c034eb18a657b32b_1.png",
+    "filename": "1.png",
+    "url": "/uploads/projects/c034eb18a657b32b_1.png",
+    "folder": "projects",
+    "size": 12533132,
+    "type": "png",
+    "createdAt": "2026-09-14T06:59:11Z"
+  },
+  {
+    "id": "4bfba18e4c73a00f_4.png",
+    "filename": "4.png",
+    "url": "/uploads/projects/4bfba18e4c73a00f_4.png",
+    "folder": "projects",
+    "size": 11536163,
+    "type": "png",
+    "createdAt": "2026-09-14T06:59:33Z"
   }
 ]

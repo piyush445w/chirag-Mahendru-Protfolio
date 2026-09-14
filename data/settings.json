@@ -2,8 +2,8 @@
   "name": "Chirag Mahendru",
   "title": "3D Environment Artist",
   "tagline": "Crafting Beyond Imagination",
-  "subtitle": "Maya - Blender - Unreal Engine - Substance Painter - ZBrush - 3ds Max",
-  "bio": "I am a passionate 3D Artist based in Punjab, India, specializing in modeling, texturing, lighting, and rendering. With hands-on experience in Unreal Engine, Maya, Blender, Substance Painter, and ZBrush, I focus on creating realistic assets and visually compelling environments.",
+  "subtitle": "Maya - Blender - Unreal Engine - Substance Painter - 3ds Max",
+  "bio": "Punjab-based 3D Environment Artist with a passion for building immersive, believable worlds. I specialize in modeling, texturing, lighting, and rendering — turning concepts into visually compelling game-ready and cinematic environments. My workflow spans Unreal Engine, Maya, Blender, Substance Painter  with a strong focus on PBR texturing, hard-surface modeling, and environment storytelling. I care about the small details that make a scene feel real — from material response under light to the layout choices that guide a viewer's eye.",
   "heroMedia": "assets/Create_a_cinematic_photoreali.mp4",
   "heroImage": "",
   "profileImage": "",
@@ -34,7 +34,7 @@
     "software": "Software"
   },
   "seoTitle": "Chirag Mahendru | 3D Environment Artist",
-  "seoDescription": "3D Artist specializing in modeling, texturing, lighting, and rendering. Expert in Unreal Engine, Maya, Blender, and ZBrush.",
+  "seoDescription": "Portfolio of Chirag Mahendru, a 3D Environment Artist specializing in modeling, texturing, lighting, and rendering with Unreal Engine, Maya, Blender, and ZBrush. Explore game-ready and cinematic environment art.",
   "ogImage": "",
   "robots": "index, follow",
   "email": "mahendruchirag901@gmail.com",
@@ -155,5 +155,5 @@
       "description": "High-end renders with dynamic lighting"
     }
   ],
-  "updatedAt": "2026-09-11T18:18:17Z"
+  "updatedAt": "2026-09-14T07:17:42Z"
 }

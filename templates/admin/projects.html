@@ -156,6 +156,61 @@
         .drop-zone:hover { border-color: #6366f1; color: #6366f1; }
         .hidden { display: none !important; }
         .projects-table th, .projects-table td { padding: 8px 10px; font-size: 13px; }
+        .upload-section {
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+        .upload-section h4 {
+            margin-bottom: 16px;
+            color: #9ca3af;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .preview-thumb {
+            margin-top: 8px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+        .preview-thumb:empty { display: none; }
+        .preview-row {
+            margin-top: 8px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .preview-row:empty { display: none; }
+        .preview-item {
+            position: relative;
+            display: inline-block;
+        }
+        .preview-item img, .preview-item video {
+            width: 120px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 8px;
+            display: block;
+        }
+        .clear-preview-btn {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            background: #ef4444;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+        }
         @media (max-width: 768px) {
             .sidebar { width: 100%; position: relative; height: auto; }
             .main-content { margin-left: 0; max-width: 100%; }
@@ -234,25 +289,56 @@
                 </div>
                 <div class="form-group">
                     <label>Cover Image</label>
-                    <input type="text" name="coverImage" placeholder="/assets/projects/.../cover.svg">
+                    <input type="text" name="coverImage" id="cover-image-url" placeholder="/assets/projects/.../cover.svg">
+                    <div class="preview-thumb" id="cover-preview"></div>
                 </div>
                 <div class="form-group">
                     <label>Hero Image</label>
-                    <input type="text" name="heroImage" placeholder="/assets/projects/.../hero.svg">
+                    <input type="text" name="heroImage" id="hero-image-url" placeholder="/assets/projects/.../hero.svg">
+                    <div class="preview-thumb" id="hero-preview"></div>
                 </div>
                 <div class="form-group">
                     <label>Gallery Images (one URL per line)</label>
                     <textarea name="gallery" id="project-gallery" rows="3" placeholder="https://..."></textarea>
+                    <div class="preview-row" id="gallery-preview"></div>
                 </div>
                 <div class="form-group">
                     <label>Video URL</label>
-                    <input type="text" name="video" placeholder="https://...">
+                    <input type="text" name="video" id="video-url" placeholder="https://...">
+                    <div class="preview-thumb" id="video-preview"></div>
                 </div>
                 <div style="display: flex; gap: 12px;">
                     <button type="submit" class="btn btn-primary">Save Project</button>
                     <button type="button" class="btn btn-secondary" onclick="hideCreateForm()">Cancel</button>
                 </div>
             </form>
+            <div class="upload-section">
+                <h4>Upload from Device</h4>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Cover Image</label>
+                        <input type="file" id="cover-file" accept="image/*" style="display:none" onchange="handleProjectUpload(this, 'coverImage')">
+                        <button type="button" class="btn btn-secondary" onclick="document.getElementById('cover-file').click()">Choose File</button>
+                    </div>
+                    <div class="form-group">
+                        <label>Hero Image</label>
+                        <input type="file" id="hero-file" accept="image/*" style="display:none" onchange="handleProjectUpload(this, 'heroImage')">
+                        <button type="button" class="btn btn-secondary" onclick="document.getElementById('hero-file').click()">Choose File</button>
+                    </div>
+                </div>
+                <div class="form-row" style="margin-top: 16px;">
+                    <div class="form-group">
+                        <label>Gallery Images</label>
+                        <input type="file" id="gallery-files" accept="image/*" multiple style="display:none" onchange="handleGalleryUpload(this)">
+                        <button type="button" class="btn btn-secondary" onclick="document.getElementById('gallery-files').click()">Choose Images</button>
+                    </div>
+                    <div class="form-group">
+                        <label>Video</label>
+                        <input type="file" id="video-file" accept="video/*" style="display:none" onchange="handleProjectUpload(this, 'video')">
+                        <button type="button" class="btn btn-secondary" onclick="document.getElementById('video-file').click()">Choose Video</button>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="card" style="overflow-x: auto;">
             <table class="projects-table">
@@ -294,8 +380,99 @@
             div.textContent = text;
             return div.innerHTML;
         }
-        function showCreateForm() { document.getElementById('create-form').classList.remove('hidden'); }
-        function hideCreateForm() { document.getElementById('create-form').classList.add('hidden'); }
+        function clearPreview(containerId) {
+            const el = document.getElementById(containerId);
+            if (el) el.innerHTML = '';
+        }
+        function showCreateForm() {
+            document.getElementById('create-form').classList.remove('hidden');
+            clearPreview('cover-preview');
+            clearPreview('hero-preview');
+            clearPreview('video-preview');
+            clearPreview('gallery-preview');
+            document.getElementById('cover-file').value = '';
+            document.getElementById('hero-file').value = '';
+            document.getElementById('gallery-files').value = '';
+            document.getElementById('video-file').value = '';
+        }
+        function hideCreateForm() {
+            document.getElementById('create-form').classList.add('hidden');
+            clearPreview('cover-preview');
+            clearPreview('hero-preview');
+            clearPreview('video-preview');
+            clearPreview('gallery-preview');
+        }
+        async function uploadProjectFile(file, field) {
+            const fd = new FormData();
+            fd.append('file', file);
+            fd.append('field', field);
+            fd.append('csrf_token', document.querySelector('input[name=csrf_token]').value);
+            const res = await fetch('/api/admin/projects/upload', { method: 'POST', body: fd });
+            if (!res.ok) {
+                const err = await res.json();
+                throw new Error(err.error || 'Upload failed');
+            }
+            return await res.json();
+        }
+        function appendPreview(url, type, containerId, onClear) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            const wrapper = document.createElement('div');
+            wrapper.className = 'preview-item';
+            let media;
+            if (type && type.startsWith('video/') || url.match(/\.(mp4|webm|mov|m4v)$/i)) {
+                media = document.createElement('video');
+                media.src = url;
+                media.controls = true;
+            } else {
+                media = document.createElement('img');
+                media.src = url;
+            }
+            wrapper.appendChild(media);
+            const clearBtn = document.createElement('button');
+            clearBtn.type = 'button';
+            clearBtn.className = 'clear-preview-btn';
+            clearBtn.textContent = '�';
+            clearBtn.onclick = () => { wrapper.remove(); if (onClear) onClear(); };
+            wrapper.appendChild(clearBtn);
+            container.appendChild(wrapper);
+        }
+        async function handleProjectUpload(input, field) {
+            const file = input.files[0];
+            if (!file) return;
+            try {
+                const result = await uploadProjectFile(file, field);
+                const urlMap = { 'coverImage': 'cover-image-url', 'heroImage': 'hero-image-url', 'video': 'video-url' };
+                const previewMap = { 'coverImage': 'cover-preview', 'heroImage': 'hero-preview', 'video': 'video-preview' };
+                const textInput = document.getElementById(urlMap[field]);
+                const previewId = previewMap[field];
+                if (textInput) textInput.value = result.url;
+                if (previewId) appendPreview(result.url, file.type, previewId, () => { if (textInput) textInput.value = ''; });
+            } catch (err) {
+                alert(err.message);
+            }
+            input.value = '';
+        }
+        async function handleGalleryUpload(input) {
+            const files = Array.from(input.files);
+            if (!files.length) return;
+            const textarea = document.getElementById('project-gallery');
+            try {
+                for (const file of files) {
+                    const result = await uploadProjectFile(file, 'gallery');
+                    const current = textarea.value ? textarea.value.split('\n').filter(s => s.trim()) : [];
+                    current.push(result.url);
+                    textarea.value = current.join('\n');
+                    appendPreview(result.url, file.type, 'gallery-preview', () => {
+                        const updated = textarea.value.split('\n').filter(s => s.trim() && s.trim() !== result.url);
+                        textarea.value = updated.join('\n');
+                    });
+                }
+            } catch (err) {
+                alert(err.message);
+            }
+            input.value = '';
+        }
         async function saveProject(e) {
             e.preventDefault();
             const form = e.target;
@@ -304,7 +481,7 @@
             const csrf = data.get('csrf_token');
             data.forEach((v, k) => { if (k !== 'csrf_token' && k !== 'editing_slug') obj[k] = v; });
             obj.software = obj.software ? obj.software.split(',').map(s => s.trim()).filter(Boolean) : [];
-            obj.gallery = obj.gallery ? obj.gallery.split('\\n').map(s => s.trim()).filter(Boolean) : [];
+            obj.gallery = obj.gallery ? obj.gallery.split('\n').map(s => s.trim()).filter(Boolean) : [];
             obj.sortOrder = parseInt(obj.sortOrder) || 0;
             obj.featured = !!form.querySelector('[name=featured]').checked;
             obj.published = !!form.querySelector('[name=published]').checked;
@@ -329,7 +506,7 @@
             if (!p) { alert('Project not found'); return; }
             document.getElementById('project-slug').value = p.slug || '';
             document.getElementById('project-software').value = (p.software || []).join(', ');
-            document.getElementById('project-gallery').value = (p.gallery || []).join('\\n');
+            document.getElementById('project-gallery').value = (p.gallery || []).join('\n');
             document.querySelector('[name=title]').value = p.title || '';
             document.querySelector('[name=categoryId]').value = p.categoryId || '';
             document.querySelector('[name=year]').value = p.year || '';
@@ -342,6 +519,16 @@
             document.querySelector('[name=heroImage]').value = p.heroImage || '';
             document.querySelector('[name=video]').value = p.video || '';
             document.getElementById('editing-slug').value = slug;
+            clearPreview('cover-preview');
+            clearPreview('hero-preview');
+            clearPreview('video-preview');
+            clearPreview('gallery-preview');
+            if (p.coverImage) appendPreview(p.coverImage, 'image', 'cover-preview');
+            if (p.heroImage) appendPreview(p.heroImage, 'image', 'hero-preview');
+            if (p.video) appendPreview(p.video, 'video', 'video-preview');
+            if (p.gallery && p.gallery.length) {
+                p.gallery.forEach(url => appendPreview(url, 'image', 'gallery-preview'));
+            }
             document.getElementById('create-form').classList.remove('hidden');
         }
         async function deleteProject(slug) {

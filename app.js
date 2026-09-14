@@ -14,6 +14,7 @@
     let parallaxElements = [];
     let observers = [];
     let isMenuOpen = false;
+    let currentMediaType = 'all';
     let elements = null;
 
     function log(message) {
@@ -90,7 +91,8 @@
             scrollProgress: document.querySelector('.scroll-progress'),
             skillsCategories: document.getElementById('skills-categories'),
             softwareMarquee: document.getElementById('software-marquee'),
-            particles: document.querySelector('.particles-container')
+            particles: document.querySelector('.particles-container'),
+            mediaFiltersContainer: document.getElementById('media-filters')
         };
     }
 
@@ -186,6 +188,7 @@
         log('Rendering dynamic content...');
         renderHero();
         renderProjects();
+        renderMediaFilters();
         renderCategoryFilters();
         renderProcess();
         renderSkills();
@@ -232,6 +235,17 @@
         });
     }
 
+
+    function hasVideo(project) {
+        return !!(project.video || project.vrVideo);
+    }
+
+    function hasImages(project) {
+        if (project.coverImage || project.heroImage) return true;
+        if (project.gallery && project.gallery.length > 0) return true;
+        return false;
+    }
+
     function renderProjects() {
         if (!elements.projectsContainer) return;
 
@@ -248,21 +262,36 @@
         }
 
         const activeCategory = elements.projectsContainer.dataset.activeCategory || '';
-        const filtered = activeCategory ? projects.filter(p => p.categoryId === activeCategory) : projects;
+        let filtered = activeCategory ? projects.filter(p => p.categoryId === activeCategory) : projects;
+
+        if (currentMediaType === 'images') {
+            filtered = filtered.filter(p => hasImages(p));
+        } else if (currentMediaType === 'videos') {
+            filtered = filtered.filter(p => hasVideo(p));
+        }
+
         const categoryMap = {};
         categories.forEach(cat => { categoryMap[cat.id] = cat.name; });
 
         elements.projectsContainer.innerHTML = filtered.map(project => {
             const tags = (project.software || []).slice(0, 2);
-            const imageUrl = project.coverImage || '/images/project-placeholder.svg';
+            const imageUrl = project.coverImage || project.heroImage || '/images/project-placeholder.svg';
             const categoryName = categoryMap[project.categoryId] || '';
-            return '<article class="project-card" data-category="' + (project.categoryId || '') + '" data-id="' + (project.id || project.slug) + '">' +
+            const videoClass = hasVideo(project) ? 'has-video' : '';
+            const softwareHtml = (project.software || []).length > 0 
+                ? '<div class="project-software">' + (project.software || []).slice(0, 2).join(' / ') + '</div>' 
+                : '';
+            const playIconHtml = hasVideo(project) ? '<div class="play-icon"></div>' : '';
+
+            return '<article class="project-card ' + videoClass + '" data-category="' + (project.categoryId || '') + '" data-id="' + (project.id || project.slug) + '">' +
                 '<div class="project-image">' +
                 '<img src="' + imageUrl + '" alt="' + project.title + '" loading="lazy">' +
                 '<span class="project-category-badge">' + categoryName + '</span>' +
+                playIconHtml +
                 '<div class="project-overlay"><span class="view-project">View Project</span></div>' +
                 '</div>' +
                 '<div class="project-content">' +
+                softwareHtml +
                 '<h3 class="project-title">' + project.title + '</h3>' +
                 '<p class="project-description">' + project.description + '</p>' +
                 '<div class="project-tags">' + tags.map(tag => '<span class="tag">' + tag + '</span>').join('') + '</div>' +
@@ -272,7 +301,6 @@
 
         setupProjectCardListeners();
     }
-
     function renderCategoryFilters() {
         const container = document.getElementById('category-filters');
         if (!container || !categories.length) return;
@@ -295,6 +323,27 @@
             });
         });
     }
+
+
+    function renderMediaFilters() {
+        const container = document.getElementById('media-filters');
+        if (!container) return;
+
+        let html = '<button class="media-filter active" data-media="all">All</button>';
+        html += '<button class="media-filter" data-media="images">Images</button>';
+        html += '<button class="media-filter" data-media="videos">Videos</button>';
+        container.innerHTML = html;
+
+        container.querySelectorAll('.media-filter').forEach(btn => {
+            btn.addEventListener('click', () => {
+                container.querySelectorAll('.media-filter').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentMediaType = btn.dataset.media;
+                renderProjects();
+            });
+        });
+    }
+
 
     function setupProjectCardListeners() {
         document.querySelectorAll('.project-card').forEach(card => {
@@ -964,20 +1013,34 @@
         const infoEl = modal.querySelector('.project-detail-info');
         const videoEl = modal.querySelector('.project-detail-video');
 
-        if (mediaEl) {
-            const cover = project.coverImage || project.heroImage || '';
-            mediaEl.innerHTML = cover ? '<img src="' + cover + '" alt="' + project.title + '">' : '';
-        }
+        const imagesContent = document.createElement('div');
+        imagesContent.className = 'project-detail-tab-content active';
+        const videosContent = document.createElement('div');
+        videosContent.className = 'project-detail-tab-content';
 
-        if (galleryEl && project.gallery && project.gallery.length) {
-            galleryEl.innerHTML = project.gallery.map(item => {
-                const url = typeof item === 'string' ? item : item.url;
-                const alt = typeof item === 'string' ? '' : (item.alt || '');
-                return '<img src="' + url + '" alt="' + alt + '">';
-            }).join('');
-        } else if (galleryEl) {
-            galleryEl.innerHTML = '';
+        const cover = project.coverImage || project.heroImage || '';
+        let imagesHtml = '';
+        if (cover) {
+            imagesHtml += '<img src="' + cover + '" alt="' + project.title + '" style="width:100%;border-radius:8px;margin-bottom:12px;">';
         }
+        if (project.gallery && project.gallery.length) {
+            imagesHtml += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;">';
+            project.gallery.forEach(item => {
+                const url = typeof item === 'string' ? item : item.url;
+                imagesHtml += '<img src="' + url + '" style="width:100%;height:120px;object-fit:cover;border-radius:8px;">';
+            });
+            imagesHtml += '</div>';
+        }
+        imagesContent.innerHTML = imagesHtml || '<p style="color:var(--text-muted);padding:20px;">No images available.</p>';
+
+        let videosHtml = '';
+        if (project.video) {
+            videosHtml += '<video controls style="width:100%;border-radius:8px;margin-bottom:12px;"><source src="' + project.video + '" type="video/mp4"></video>';
+        }
+        if (project.vrVideo) {
+            videosHtml += '<video controls style="width:100%;border-radius:8px;"><source src="' + project.vrVideo + '" type="video/mp4"></video>';
+        }
+        videosContent.innerHTML = videosHtml || '<p style="color:var(--text-muted);padding:20px;">No videos available.</p>';
 
         if (infoEl) {
             infoEl.innerHTML = '<h2 class="project-detail-title">' + project.title + '</h2>' +
@@ -985,26 +1048,57 @@
                 '<div class="project-detail-tags">' + (project.software || []).map(tag => '<span class="tag">' + tag + '</span>').join('') + '</div>';
         }
 
+        const content = modal.querySelector('.project-detail-content');
+        
+        const oldTabs = content.querySelectorAll('.project-detail-tab-content');
+        oldTabs.forEach(t => t.remove());
+        
+        const oldTabBar = content.querySelector('.project-detail-tabs');
+        if (oldTabBar) oldTabBar.remove();
+
+        const closeBtn = content.querySelector('.project-detail-close');
+        const tabBar = document.createElement('div');
+        tabBar.className = 'project-detail-tabs';
+        tabBar.innerHTML = '<button class="project-detail-tab active" data-tab="images">Images</button>' +
+            '<button class="project-detail-tab" data-tab="videos">Videos</button>';
+        content.insertBefore(tabBar, mediaEl);
+
+        if (mediaEl) mediaEl.innerHTML = '';
+        if (galleryEl) galleryEl.innerHTML = '';
+        if (videoEl) videoEl.innerHTML = '';
+
         if (videoEl) {
-            if (project.video) {
-                videoEl.innerHTML = '<video controls class="project-detail-video-player"><source src="' + project.video + '" type="video/mp4"></video>';
-            } else if (project.vrVideo) {
-                videoEl.innerHTML = '<video controls class="project-detail-video-player"><source src="' + project.vrVideo + '" type="video/mp4"></video>';
-            } else {
-                videoEl.innerHTML = '';
-            }
+            videoEl.parentNode.insertBefore(imagesContent, videoEl);
+            videoEl.parentNode.insertBefore(videosContent, videoEl);
+        } else if (infoEl) {
+            infoEl.parentNode.insertBefore(imagesContent, infoEl);
+            infoEl.parentNode.insertBefore(videosContent, infoEl);
         }
 
-        const closeBtn = modal.querySelector('.project-detail-close');
-        if (closeBtn) {
-            closeBtn.onclick = () => {
+        tabBar.querySelectorAll('.project-detail-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabBar.querySelectorAll('.project-detail-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                const tabName = tab.dataset.tab;
+                document.querySelectorAll('.project-detail-tab-content').forEach(c => c.classList.remove('active'));
+                if (tabName === 'images') imagesContent.classList.add('active');
+                if (tabName === 'videos') videosContent.classList.add('active');
+            });
+        });
+
+        const closeBtnHandler = modal.querySelector('.project-detail-close');
+        if (closeBtnHandler) {
+            closeBtnHandler.onclick = () => {
                 modal.style.display = 'none';
+                const tabsToRemove = modal.querySelectorAll('.project-detail-tab-content');
+                tabsToRemove.forEach(t => t.remove());
+                const tabBarToRemove = modal.querySelector('.project-detail-tabs');
+                if (tabBarToRemove) tabBarToRemove.remove();
             };
         }
 
         modal.style.display = 'flex';
     }
-
     function debounce(func, wait) {
         let timeout;
         return function executedFunction(...args) {

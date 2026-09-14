@@ -20,7 +20,7 @@
     "optimization": "",
     "credits": [],
     "createdAt": "2024-01-01T00:00:00Z",
-    "updatedAt": "2026-09-13T15:08:15Z",
+    "updatedAt": "2026-09-14T06:33:58Z",
     "csrf_token": "c8c44826d1b4346c9d9de0d76b3bf220"
   },
   {
@@ -41,11 +41,11 @@
     "coverImage": "assets/projects/ancient-axe/cover.svg",
     "heroImage": "assets/projects/ancient-axe/hero.svg",
     "gallery": [],
-    "video": "",
+    "video": null,
     "optimization": "",
     "credits": [],
     "createdAt": "2024-02-01T00:00:00Z",
-    "updatedAt": "2024-02-01T00:00:00Z"
+    "updatedAt": "2026-09-14T06:43:45Z"
   },
   {
     "id": "sci-fi-robot",
@@ -118,5 +118,30 @@
     "credits": [],
     "createdAt": "2024-06-01T00:00:00Z",
     "updatedAt": "2024-06-01T00:00:00Z"
+  },
+  {
+    "id": "dafz",
+    "title": "adffc",
+    "slug": "dafz",
+    "categoryId": "product-viz",
+    "year": "2026",
+    "role": "3D Artist",
+    "description": "ddzxscdc",
+    "featured": false,
+    "published": true,
+    "sortOrder": 1,
+    "software": [
+      "maya"
+    ],
+    "coverImage": "http://127.0.0.1:5000/uploads/projects/c034eb18a657b32b_1.png",
+    "heroImage": null,
+    "gallery": [
+      "http://127.0.0.1:5000/uploads/projects/4bfba18e4c73a00f_4.png"
+    ],
+    "video": null,
+    "optimization": "",
+    "credits": [],
+    "createdAt": "2026-09-14T07:00:19Z",
+    "updatedAt": "2026-09-14T07:10:31Z"
   }
 ]

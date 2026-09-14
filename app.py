@@ -794,6 +794,50 @@ def api_admin_upload_software_icon():
         "size": size,
         "type": ext
     })
+@app.route("/api/admin/projects/upload", methods=["POST"])
+@login_required
+@csrf_required
+def api_admin_upload_project_media():
+    if "file" not in request.files:
+        return jsonify({"error": "No file"}), 400
+    file = request.files["file"]
+    field = request.form.get("field", "gallery")
+    if file.filename == "":
+        return jsonify({"error": "No file selected"}), 400
+
+    ext = file.filename.rsplit(".", 1)[-1].lower() if "." in file.filename else ""
+    allowed_images = {"jpg", "jpeg", "png", "gif", "webp", "svg"}
+    allowed_videos = {"mp4", "webm", "mov", "m4v"}
+
+    if field == "video":
+        if ext not in allowed_videos:
+            return jsonify({"error": "Invalid video type. Allowed: MP4, WEBM, MOV, M4V"}), 400
+    else:
+        if ext not in allowed_images:
+            return jsonify({"error": "Invalid image type. Allowed: JPG, PNG, GIF, WEBP, SVG"}), 400
+
+    safe_name = secrets.token_hex(8) + "." + ext
+    upload_dir = os.path.join(UPLOADS_DIR, "projects")
+    os.makedirs(upload_dir, exist_ok=True)
+    path = os.path.join(upload_dir, safe_name)
+    file.save(path)
+    size = os.path.getsize(path)
+
+    url = "/uploads/projects/" + safe_name
+    media_item = {
+        "id": safe_name,
+        "filename": file.filename,
+        "url": url,
+        "folder": "projects",
+        "size": size,
+        "type": ext,
+        "createdAt": now_iso()
+    }
+    media = _get_media()
+    media.append(media_item)
+    _save_media(media)
+    return jsonify(media_item)
+
 
 @app.route("/admin/seo", methods=["PUT"])
 @login_required
