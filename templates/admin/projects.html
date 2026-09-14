@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -407,6 +407,15 @@
             fd.append('file', file);
             fd.append('field', field);
             fd.append('csrf_token', document.querySelector('input[name=csrf_token]').value);
+            const editingSlug = document.getElementById('editing-slug').value;
+            if (editingSlug) {
+                fd.append('slug', editingSlug);
+            } else {
+                const projectSlug = document.getElementById('project-slug');
+                if (projectSlug && projectSlug.value.trim()) {
+                    fd.append('slug', projectSlug.value.trim());
+                }
+            }
             const res = await fetch('/api/admin/projects/upload', { method: 'POST', body: fd });
             if (!res.ok) {
                 const err = await res.json();
@@ -432,7 +441,7 @@
             const clearBtn = document.createElement('button');
             clearBtn.type = 'button';
             clearBtn.className = 'clear-preview-btn';
-            clearBtn.textContent = '�';
+            clearBtn.textContent = 'ï¿½';
             clearBtn.onclick = () => { wrapper.remove(); if (onClear) onClear(); };
             wrapper.appendChild(clearBtn);
             container.appendChild(wrapper);
@@ -540,3 +549,4 @@
     </script>
 </body>
 </html>
+

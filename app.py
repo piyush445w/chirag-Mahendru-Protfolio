@@ -344,7 +344,20 @@ def admin_settings_page():
 @login_required
 def admin_media_page():
     media = _get_media()
-    return render_template("admin/media.html", active_page="media", media=media, formatSize=formatSize)
+    projects = _get_projects()
+    project_map = {p["slug"]: p["title"] for p in projects}
+    grouped = {}
+    general = []
+    for m in media:
+        slug = m.get("projectSlug") or ""
+        if slug:
+            if slug not in grouped:
+                grouped[slug] = []
+            grouped[slug].append(m)
+        else:
+            general.append(m)
+    return render_template("admin/media.html", active_page="media", media=media, projects=projects, 
+                           grouped_media=grouped, general_media=general, project_map=project_map, formatSize=formatSize)
 
 @app.route("/admin/seo", methods=["GET"])
 @login_required
@@ -802,6 +815,7 @@ def api_admin_upload_project_media():
         return jsonify({"error": "No file"}), 400
     file = request.files["file"]
     field = request.form.get("field", "gallery")
+    slug = request.form.get("slug", "").strip()
     if file.filename == "":
         return jsonify({"error": "No file selected"}), 400
 
@@ -818,16 +832,19 @@ def api_admin_upload_project_media():
 
     safe_name = secrets.token_hex(8) + "." + ext
     upload_dir = os.path.join(UPLOADS_DIR, "projects")
+    if slug:
+        upload_dir = os.path.join(upload_dir, slug)
     os.makedirs(upload_dir, exist_ok=True)
     path = os.path.join(upload_dir, safe_name)
     file.save(path)
     size = os.path.getsize(path)
 
-    url = "/uploads/projects/" + safe_name
+    url = "/uploads/projects/" + (slug + "/" if slug else "") + safe_name
     media_item = {
         "id": safe_name,
         "filename": file.filename,
         "url": url,
+        "projectSlug": slug if slug else "",
         "folder": "projects",
         "size": size,
         "type": ext,
