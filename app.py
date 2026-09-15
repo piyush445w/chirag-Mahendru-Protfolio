@@ -693,8 +693,8 @@ def admin_upload():
         return jsonify({"error": "No file"}), 400
     file = request.files["file"]
     folder = request.form.get("folder", "general")
-    if request.content_length and request.content_length > 250 * 1024 * 1024:
-        return jsonify({"error": "File too large. Max 250MB."}), 413
+    if request.content_length and request.content_length > 1000 * 1024 * 1024:
+        return jsonify({"error": "File too large. Max 1000MB."}), 413
     if file.filename == "":
         return jsonify({"error": "No file selected"}), 400
     filename = secrets.token_hex(8) + "_" + file.filename
@@ -808,10 +808,10 @@ def api_admin_upload_project_media():
     field = request.form.get("field", "gallery")
     slug = request.form.get("slug", "").strip()
     image_max = 10 * 1024 * 1024
-    video_max = 250 * 1024 * 1024
+    video_max = 1000 * 1024 * 1024
     if request.content_length:
         if field == "video" and request.content_length > video_max:
-            return jsonify({"error": "Video too large. Max 250MB."}), 413
+            return jsonify({"error": "Video too large. Max 1000MB."}), 413
         if field != "video" and request.content_length > image_max:
             return jsonify({"error": "Image too large. Max 10MB."}), 413
     if file.filename == "":
@@ -838,7 +838,7 @@ def api_admin_upload_project_media():
     size = os.path.getsize(path)
     if field == "video" and size > video_max:
         os.remove(path)
-        return jsonify({"error": "Video too large. Max 250MB."}), 413
+        return jsonify({"error": "Video too large. Max 1000MB."}), 413
     if field != "video" and size > image_max:
         os.remove(path)
         return jsonify({"error": "Image too large. Max 10MB."}), 413

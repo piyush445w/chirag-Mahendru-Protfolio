@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -416,12 +416,64 @@
                     fd.append('slug', projectSlug.value.trim());
                 }
             }
-            const res = await fetch('/api/admin/projects/upload', { method: 'POST', body: fd });
-            if (!res.ok) {
-                const err = await res.json();
-                throw new Error(err.error || 'Upload failed');
+
+            const previewId = field === 'coverImage' ? 'cover-preview' : field === 'heroImage' ? 'hero-preview' : field === 'video' ? 'video-preview' : 'gallery-preview';
+            const container = document.getElementById(previewId);
+            if (container) {
+                const progressEl = document.createElement('div');
+                progressEl.className = 'upload-progress';
+                progressEl.textContent = 'Uploading... 0%';
+                progressEl.style.cssText = 'color:#6366f1;font-size:13px;padding:8px 0;font-family:monospace;';
+                container.appendChild(progressEl);
             }
-            return await res.json();
+
+            try {
+                const xhr = new XMLHttpRequest();
+                const promise = new Promise((resolve, reject) => {
+                    xhr.upload.addEventListener('progress', (e) => {
+                        if (e.lengthComputable && container) {
+                            const pct = Math.round((e.loaded / e.total) * 100);
+                            const progressEl = container.querySelector('.upload-progress');
+                            if (progressEl) {
+                                progressEl.textContent = 'Uploading... ' + pct + '%';
+                            }
+                        }
+                    });
+                    xhr.addEventListener('load', () => {
+                        if (xhr.status >= 200 && xhr.status < 300) {
+                            resolve(JSON.parse(xhr.responseText));
+                        } else {
+                            let msg = 'Upload failed';
+                            try { const j = JSON.parse(xhr.responseText); msg = j.error || msg; } catch(e){}
+                            reject(new Error(msg + ' (HTTP ' + xhr.status + ')'));
+                        }
+                    });
+                    xhr.addEventListener('error', () => reject(new Error('Network error during upload')));
+                    xhr.addEventListener('abort', () => reject(new Error('Upload cancelled')));
+                    xhr.open('POST', '/api/admin/projects/upload');
+                    xhr.setRequestHeader('X-CSRFToken', document.querySelector('input[name=csrf_token]').value);
+                    xhr.send(fd);
+                });
+
+                const result = await promise;
+                if (container) {
+                    const progressEl = container.querySelector('.upload-progress');
+                    if (progressEl) progressEl.remove();
+                }
+
+                const urlMap = { 'coverImage': 'cover-image-url', 'heroImage': 'hero-image-url', 'video': 'video-url' };
+                const previewMap = { 'coverImage': 'cover-preview', 'heroImage': 'hero-preview', 'video': 'video-preview' };
+                const textInput = document.getElementById(urlMap[field]);
+                const previewId2 = previewMap[field];
+                if (textInput) textInput.value = result.url;
+                if (previewId2) appendPreview(result.url, file.type, previewId2, () => { if (textInput) textInput.value = ''; });
+            } catch (err) {
+                if (container) {
+                    const progressEl = container.querySelector('.upload-progress');
+                    if (progressEl) progressEl.remove();
+                }
+                alert(err.message);
+            }
         }
         function appendPreview(url, type, containerId, onClear) {
             const container = document.getElementById(containerId);
@@ -441,7 +493,7 @@
             const clearBtn = document.createElement('button');
             clearBtn.type = 'button';
             clearBtn.className = 'clear-preview-btn';
-            clearBtn.textContent = 'ï¿½';
+            clearBtn.textContent = '�';
             clearBtn.onclick = () => { wrapper.remove(); if (onClear) onClear(); };
             wrapper.appendChild(clearBtn);
             container.appendChild(wrapper);

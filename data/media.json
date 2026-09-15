@@ -1,272 +1,5 @@
 ﻿[
   {
-    "id": "c40ab9a1b7952312_WhatsApp Image 2026-09-10 at 11.48.43 AM.jpeg",
-    "filename": "WhatsApp Image 2026-09-10 at 11.48.43 AM.jpeg",
-    "url": "/uploads/hero/c40ab9a1b7952312_WhatsApp Image 2026-09-10 at 11.48.43 AM.jpeg",
-    "folder": "hero",
-    "size": 188663,
-    "type": "jpeg",
-    "createdAt": "2026-09-11T18:17:43Z"
-  },
-  {
-    "id": "c034eb18a657b32b_1.png",
-    "filename": "1.png",
-    "url": "/uploads/projects/c034eb18a657b32b_1.png",
-    "folder": "projects",
-    "size": 12533132,
-    "type": "png",
-    "createdAt": "2026-09-14T06:59:11Z"
-  },
-  {
-    "id": "4bfba18e4c73a00f_4.png",
-    "filename": "4.png",
-    "url": "/uploads/projects/4bfba18e4c73a00f_4.png",
-    "folder": "projects",
-    "size": 11536163,
-    "type": "png",
-    "createdAt": "2026-09-14T06:59:33Z"
-  },
-  {
-    "id": "aef52829fffd5461.png",
-    "filename": "Gemini_Generated_Image_o475gdo475gdo475.png",
-    "url": "/uploads/projects/high-end-car-render/aef52829fffd5461.png",
-    "projectSlug": "high-end-car-render",
-    "folder": "projects",
-    "size": 4898738,
-    "type": "png",
-    "createdAt": "2026-09-14T09:29:07Z"
-  },
-  {
-    "id": "aa044449f59c096a.png",
-    "filename": "Gemini_Generated_Image_jamr7qjamr7qjamr.png",
-    "url": "/uploads/projects/ancient-axe-sculpt/aa044449f59c096a.png",
-    "projectSlug": "ancient-axe-sculpt",
-    "folder": "projects",
-    "size": 6833712,
-    "type": "png",
-    "createdAt": "2026-09-14T09:32:54Z"
-  },
-  {
-    "id": "d94d6dec0be5a34d.jpeg",
-    "filename": "WhatsApp Image 2026-09-14 at 2.21.07 PM.jpeg",
-    "url": "/uploads/projects/ancient-axe-sculpt/d94d6dec0be5a34d.jpeg",
-    "projectSlug": "ancient-axe-sculpt",
-    "folder": "projects",
-    "size": 250145,
-    "type": "jpeg",
-    "createdAt": "2026-09-14T09:33:17Z"
-  },
-  {
-    "id": "22edd7c43b16030a.png",
-    "filename": "Gemini_Generated_Image_o475gdo475gdo475.png",
-    "url": "/uploads/projects/ancient-axe-sculpt/22edd7c43b16030a.png",
-    "projectSlug": "ancient-axe-sculpt",
-    "folder": "projects",
-    "size": 4898738,
-    "type": "png",
-    "createdAt": "2026-09-14T09:33:17Z"
-  },
-  {
-    "id": "b0fd7fd7f5e5b464.png",
-    "filename": "ChatGPT Image Sep 14, 2026, 02_09_23 PM.png",
-    "url": "/uploads/projects/ancient-axe-sculpt/b0fd7fd7f5e5b464.png",
-    "projectSlug": "ancient-axe-sculpt",
-    "folder": "projects",
-    "size": 2178884,
-    "type": "png",
-    "createdAt": "2026-09-14T09:33:17Z"
-  },
-  {
-    "id": "ce458be2f0e944ba.png",
-    "filename": "ChatGPT Image Sep 9, 2026, 10_53_03 AM.png",
-    "url": "/uploads/projects/ancient-axe-sculpt/ce458be2f0e944ba.png",
-    "projectSlug": "ancient-axe-sculpt",
-    "folder": "projects",
-    "size": 843236,
-    "type": "png",
-    "createdAt": "2026-09-14T09:33:17Z"
-  },
-  {
-    "id": "dfdf4377cda2cc70.jpg",
-    "filename": "a50b87b509ebadcb63bfefb4aecd4143.jpg",
-    "url": "/uploads/projects/ancient-axe-sculpt/dfdf4377cda2cc70.jpg",
-    "projectSlug": "ancient-axe-sculpt",
-    "folder": "projects",
-    "size": 44863,
-    "type": "jpg",
-    "createdAt": "2026-09-14T09:33:17Z"
-  },
-  {
-    "id": "8e3b20a43f077ca5.png",
-    "filename": "sartaj.png",
-    "url": "/uploads/projects/ancient-axe-sculpt/8e3b20a43f077ca5.png",
-    "projectSlug": "ancient-axe-sculpt",
-    "folder": "projects",
-    "size": 2419118,
-    "type": "png",
-    "createdAt": "2026-09-14T09:33:17Z"
-  },
-  {
-    "id": "3b41d0820e5bb502.png",
-    "filename": "Copy of Futuristic Tech Pitch Deck (1).png",
-    "url": "/uploads/projects/ancient-axe-sculpt/3b41d0820e5bb502.png",
-    "projectSlug": "ancient-axe-sculpt",
-    "folder": "projects",
-    "size": 2290176,
-    "type": "png",
-    "createdAt": "2026-09-14T09:33:17Z"
-  },
-  {
-    "id": "be9ba3629126e550.png",
-    "filename": "1.png",
-    "url": "/uploads/projects/ancient-axe-sculpt/be9ba3629126e550.png",
-    "projectSlug": "ancient-axe-sculpt",
-    "folder": "projects",
-    "size": 1798334,
-    "type": "png",
-    "createdAt": "2026-09-14T09:33:17Z"
-  },
-  {
-    "id": "03fadb7e06c145ae.jpg",
-    "filename": "Copy of Futuristic Tech Pitch Deck (1).jpg",
-    "url": "/uploads/projects/ancient-axe-sculpt/03fadb7e06c145ae.jpg",
-    "projectSlug": "ancient-axe-sculpt",
-    "folder": "projects",
-    "size": 288047,
-    "type": "jpg",
-    "createdAt": "2026-09-14T09:33:17Z"
-  },
-  {
-    "id": "63f63c834d36df86.jpg",
-    "filename": "Copy of Futuristic Tech Pitch Deck.jpg",
-    "url": "/uploads/projects/ancient-axe-sculpt/63f63c834d36df86.jpg",
-    "projectSlug": "ancient-axe-sculpt",
-    "folder": "projects",
-    "size": 273644,
-    "type": "jpg",
-    "createdAt": "2026-09-14T09:33:18Z"
-  },
-  {
-    "id": "7d1e021ab4a001c8.png",
-    "filename": "reception (1).png",
-    "url": "/uploads/projects/ancient-axe-sculpt/7d1e021ab4a001c8.png",
-    "projectSlug": "ancient-axe-sculpt",
-    "folder": "projects",
-    "size": 2117895,
-    "type": "png",
-    "createdAt": "2026-09-14T09:33:18Z"
-  },
-  {
-    "id": "998359ecfb34bb78.png",
-    "filename": "reception.png",
-    "url": "/uploads/projects/ancient-axe-sculpt/998359ecfb34bb78.png",
-    "projectSlug": "ancient-axe-sculpt",
-    "folder": "projects",
-    "size": 2117895,
-    "type": "png",
-    "createdAt": "2026-09-14T09:33:18Z"
-  },
-  {
-    "id": "87920a87579a43ad.png",
-    "filename": "achievements.png",
-    "url": "/uploads/projects/ancient-axe-sculpt/87920a87579a43ad.png",
-    "projectSlug": "ancient-axe-sculpt",
-    "folder": "projects",
-    "size": 2135520,
-    "type": "png",
-    "createdAt": "2026-09-14T09:33:18Z"
-  },
-  {
-    "id": "cdb542b19d1555d7.png",
-    "filename": "Copy of Futuristic Tech Pitch Deck (2).png",
-    "url": "/uploads/projects/ancient-axe-sculpt/cdb542b19d1555d7.png",
-    "projectSlug": "ancient-axe-sculpt",
-    "folder": "projects",
-    "size": 2315484,
-    "type": "png",
-    "createdAt": "2026-09-14T09:33:18Z"
-  },
-  {
-    "id": "94dc95dca2f1ef9a.png",
-    "filename": "Copy of Futuristic Tech Pitch Deck.png",
-    "url": "/uploads/projects/ancient-axe-sculpt/94dc95dca2f1ef9a.png",
-    "projectSlug": "ancient-axe-sculpt",
-    "folder": "projects",
-    "size": 1128606,
-    "type": "png",
-    "createdAt": "2026-09-14T09:33:18Z"
-  },
-  {
-    "id": "8a2ac43a107e398a.jpeg",
-    "filename": "Copy of Futuristic Tech Pitch Deck.jpg.jpeg",
-    "url": "/uploads/projects/ancient-axe-sculpt/8a2ac43a107e398a.jpeg",
-    "projectSlug": "ancient-axe-sculpt",
-    "folder": "projects",
-    "size": 218632,
-    "type": "jpeg",
-    "createdAt": "2026-09-14T09:33:18Z"
-  },
-  {
-    "id": "0acfe6f1ac12a4ed.jpeg",
-    "filename": "Copy of Futuristic Tech Pitch Deck (2).jpg.jpeg",
-    "url": "/uploads/projects/ancient-axe-sculpt/0acfe6f1ac12a4ed.jpeg",
-    "projectSlug": "ancient-axe-sculpt",
-    "folder": "projects",
-    "size": 211439,
-    "type": "jpeg",
-    "createdAt": "2026-09-14T09:33:18Z"
-  },
-  {
-    "id": "b47fce6c8af9b213.png",
-    "filename": "Gemini_Generated_Image_46cyq546cyq546cy.png",
-    "url": "/uploads/projects/ancient-axe-sculpt/b47fce6c8af9b213.png",
-    "projectSlug": "ancient-axe-sculpt",
-    "folder": "projects",
-    "size": 5281730,
-    "type": "png",
-    "createdAt": "2026-09-14T09:33:18Z"
-  },
-  {
-    "id": "8c4d9821993e1e46.jpeg",
-    "filename": "WhatsApp Image 2026-08-06 at 2.33.47 PM.jpeg",
-    "url": "/uploads/projects/ancient-axe-sculpt/8c4d9821993e1e46.jpeg",
-    "projectSlug": "ancient-axe-sculpt",
-    "folder": "projects",
-    "size": 148277,
-    "type": "jpeg",
-    "createdAt": "2026-09-14T09:33:18Z"
-  },
-  {
-    "id": "7a369e556f33fef7.jpg",
-    "filename": "images.jpg",
-    "url": "/uploads/projects/ancient-axe-sculpt/7a369e556f33fef7.jpg",
-    "projectSlug": "ancient-axe-sculpt",
-    "folder": "projects",
-    "size": 7725,
-    "type": "jpg",
-    "createdAt": "2026-09-14T09:33:18Z"
-  },
-  {
-    "id": "0a9bc9fbd1834052.jpg",
-    "filename": "environemnt.jpg",
-    "url": "/uploads/projects/ancient-axe-sculpt/0a9bc9fbd1834052.jpg",
-    "projectSlug": "ancient-axe-sculpt",
-    "folder": "projects",
-    "size": 3026199,
-    "type": "jpg",
-    "createdAt": "2026-09-14T09:33:18Z"
-  },
-  {
-    "id": "d904e5a461953a81.png",
-    "filename": "Gemini_Generated_Image_bbtq05bbtq05bbtq (1).png",
-    "url": "/uploads/projects/ancient-axe-sculpt/d904e5a461953a81.png",
-    "projectSlug": "ancient-axe-sculpt",
-    "folder": "projects",
-    "size": 940854,
-    "type": "png",
-    "createdAt": "2026-09-14T09:33:18Z"
-  },
-  {
     "id": "0d2344fa35ad93b6.mp4",
     "filename": "Create_a_cinematic_photoreali (2).mp4",
     "url": "/uploads/projects/ancient-axe-sculpt/0d2344fa35ad93b6.mp4",
@@ -277,13 +10,103 @@
     "createdAt": "2026-09-14T09:34:22Z"
   },
   {
-    "id": "b2c4d5b2098fa735.mp4",
-    "filename": "ganeshjienv.mp4",
-    "url": "/uploads/projects/high-end-car-render/b2c4d5b2098fa735.mp4",
+    "id": "0621cc440bcc3d8e.mp4",
+    "filename": "blueprints.mp4",
+    "url": "/uploads/projects/high-end-car-render/0621cc440bcc3d8e.mp4",
     "projectSlug": "high-end-car-render",
     "folder": "projects",
-    "size": 30758151,
+    "size": 17160100,
     "type": "mp4",
-    "createdAt": "2026-09-14T21:16:21Z"
+    "createdAt": "2026-09-15T04:17:12Z"
+  },
+  {
+    "id": "727fb83bb380ee6c.mp4",
+    "filename": "blueprints.mp4",
+    "url": "/uploads/projects/high-end-car-render/727fb83bb380ee6c.mp4",
+    "projectSlug": "high-end-car-render",
+    "folder": "projects",
+    "size": 17160100,
+    "type": "mp4",
+    "createdAt": "2026-09-15T04:29:39Z"
+  },
+  {
+    "id": "69c20392a064d456.png",
+    "filename": "2.png",
+    "url": "/uploads/projects/vzx/69c20392a064d456.png",
+    "projectSlug": "vzx",
+    "folder": "projects",
+    "size": 3037316,
+    "type": "png",
+    "createdAt": "2026-09-15T04:41:14Z"
+  },
+  {
+    "id": "26d55620a63ae679.png",
+    "filename": "2.png",
+    "url": "/uploads/projects/vzx/26d55620a63ae679.png",
+    "projectSlug": "vzx",
+    "folder": "projects",
+    "size": 3037316,
+    "type": "png",
+    "createdAt": "2026-09-15T04:41:22Z"
+  },
+  {
+    "id": "27422bb18c8f1228.mp4",
+    "filename": "MVERSE VR.mp4",
+    "url": "/uploads/projects/vzx/27422bb18c8f1228.mp4",
+    "projectSlug": "vzx",
+    "folder": "projects",
+    "size": 415589783,
+    "type": "mp4",
+    "createdAt": "2026-09-15T04:41:28Z"
+  },
+  {
+    "id": "036067343679b44b.png",
+    "filename": "2.png",
+    "url": "/uploads/projects/vzx/036067343679b44b.png",
+    "projectSlug": "vzx",
+    "folder": "projects",
+    "size": 3037316,
+    "type": "png",
+    "createdAt": "2026-09-15T04:42:12Z"
+  },
+  {
+    "id": "470f8b47f927e874.png",
+    "filename": "2.png",
+    "url": "/uploads/projects/vzx/470f8b47f927e874.png",
+    "projectSlug": "vzx",
+    "folder": "projects",
+    "size": 3037316,
+    "type": "png",
+    "createdAt": "2026-09-15T04:42:29Z"
+  },
+  {
+    "id": "0bd1adcd26609d6b.mp4",
+    "filename": "MVERSE VR.mp4",
+    "url": "/uploads/projects/vzx/0bd1adcd26609d6b.mp4",
+    "projectSlug": "vzx",
+    "folder": "projects",
+    "size": 415589783,
+    "type": "mp4",
+    "createdAt": "2026-09-15T04:43:32Z"
+  },
+  {
+    "id": "a54b919c512ee061.mp4",
+    "filename": "MVERSE VR.mp4",
+    "url": "/uploads/projects/vzx/a54b919c512ee061.mp4",
+    "projectSlug": "vzx",
+    "folder": "projects",
+    "size": 415589783,
+    "type": "mp4",
+    "createdAt": "2026-09-15T04:44:44Z"
+  },
+  {
+    "id": "3f69ba3d9ba2018f.mp4",
+    "filename": "MVERSE VR.mp4",
+    "url": "/uploads/projects/zvcxs/3f69ba3d9ba2018f.mp4",
+    "projectSlug": "zvcxs",
+    "folder": "projects",
+    "size": 415589783,
+    "type": "mp4",
+    "createdAt": "2026-09-15T04:45:10Z"
   }
 ]

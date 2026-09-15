@@ -1,147 +1,23 @@
 ﻿[
   {
-    "id": "high-end-car",
-    "title": "Test Update",
-    "slug": "high-end-car-render",
-    "categoryId": "design",
-    "year": "2024",
-    "role": "3D Artist",
-    "description": "Test",
+    "id": "zvcxs",
+    "title": "fwedszxfescde",
+    "slug": "zvcxs",
+    "categoryId": "product-viz",
+    "year": "2023",
+    "role": "cszxsa",
+    "description": "asczx s",
     "featured": false,
     "published": true,
     "sortOrder": 0,
     "software": [],
-    "coverImage": null,
-    "heroImage": "http://127.0.0.1:5000/uploads/hero/c40ab9a1b7952312_WhatsApp Image 2026-09-10 at 11.48.43 AM.jpeg",
-    "gallery": [
-      "http://127.0.0.1:5000/uploads/hero/c40ab9a1b7952312_WhatsApp Image 2026-09-10 at 11.48.43 AM.jpeg"
-    ],
-    "video": "/uploads/projects/high-end-car-render/b2c4d5b2098fa735.mp4",
-    "optimization": "",
-    "credits": [],
-    "createdAt": "2024-01-01T00:00:00Z",
-    "updatedAt": "2026-09-14T21:16:27Z",
-    "csrf_token": "c8c44826d1b4346c9d9de0d76b3bf220"
-  },
-  {
-    "id": "ancient-axe",
-    "title": "Ancient Axe Sculpt",
-    "slug": "ancient-axe-sculpt",
-    "categoryId": "prop-art",
-    "year": "2024",
-    "role": "3D Artist",
-    "description": "Detailed prop work featuring an ancient battle axe with realistic wear and weathering. Created using Substance Painter for texturing with detailed damage, rust, and wear patterns.",
-    "featured": true,
-    "published": true,
-    "sortOrder": 2,
-    "software": [
-      "Substance Painter",
-      "Maya"
-    ],
-    "coverImage": null,
+    "coverImage": "",
     "heroImage": null,
     "gallery": [],
-    "video": "/uploads/projects/ancient-axe-sculpt/0d2344fa35ad93b6.mp4",
+    "video": "/uploads/projects/zvcxs/3f69ba3d9ba2018f.mp4",
     "optimization": "",
     "credits": [],
-    "createdAt": "2024-02-01T00:00:00Z",
-    "updatedAt": "2026-09-14T09:34:25Z"
-  },
-  {
-    "id": "sci-fi-robot",
-    "title": "Sci-Fi Robot Design",
-    "slug": "sci-fi-robot-design",
-    "categoryId": "character-art",
-    "year": "2024",
-    "role": "3D Artist",
-    "description": "Futuristic character design featuring a sci-fi robot with intricate mechanical details. Combined Maya modeling with Substance Painter texturing for a battle-worn aesthetic.",
-    "featured": true,
-    "published": true,
-    "sortOrder": 3,
-    "software": [
-      "Maya",
-      "Substance Painter"
-    ],
-    "coverImage": "assets/projects/robot/cover.svg",
-    "heroImage": "assets/projects/robot/hero.svg",
-    "gallery": [],
-    "video": "",
-    "optimization": "",
-    "credits": [],
-    "createdAt": "2024-03-01T00:00:00Z",
-    "updatedAt": "2024-03-01T00:00:00Z"
-  },
-  {
-    "id": "grandmaster-chess",
-    "title": "Grandmaster Chess Set",
-    "slug": "grandmaster-chess",
-    "categoryId": "product-viz",
-    "year": "2024",
-    "role": "3D Artist",
-    "description": "Classic chess set with premium materials featuring marble base, wooden pieces, and metallic gold accents. Rendered with studio lighting using Arnold for realistic material response.",
-    "featured": true,
-    "published": true,
-    "sortOrder": 5,
-    "software": [
-      "Maya",
-      "Arnold"
-    ],
-    "coverImage": "assets/projects/chess/cover.svg",
-    "heroImage": "assets/projects/chess/hero.svg",
-    "gallery": [],
-    "video": "",
-    "optimization": "",
-    "credits": [],
-    "createdAt": "2024-05-01T00:00:00Z",
-    "updatedAt": "2024-05-01T00:00:00Z"
-  },
-  {
-    "id": "animation-reel",
-    "title": "3D Animation Reel",
-    "slug": "3d-animation-reel",
-    "categoryId": "animation",
-    "year": "2024",
-    "role": "3D Artist / Animator",
-    "description": "Video production and motion design reel showcasing character animation, camera movements, and dynamic lighting. Created using 3ds Max and V-Ray for high-quality output.",
-    "featured": true,
-    "published": true,
-    "sortOrder": 6,
-    "software": [
-      "3ds Max",
-      "V-Ray"
-    ],
-    "coverImage": "assets/projects/reel/cover.svg",
-    "heroImage": "assets/projects/reel/hero.svg",
-    "gallery": [],
-    "video": "assets/projects/reel/showreel.mp4",
-    "optimization": "",
-    "credits": [],
-    "createdAt": "2024-06-01T00:00:00Z",
-    "updatedAt": "2024-06-01T00:00:00Z"
-  },
-  {
-    "id": "dafz",
-    "title": "adffc",
-    "slug": "dafz",
-    "categoryId": "product-viz",
-    "year": "2026",
-    "role": "3D Artist",
-    "description": "ddzxscdc",
-    "featured": false,
-    "published": true,
-    "sortOrder": 1,
-    "software": [
-      "maya"
-    ],
-    "coverImage": "http://127.0.0.1:5000/uploads/projects/c034eb18a657b32b_1.png",
-    "heroImage": null,
-    "gallery": [
-      "http://127.0.0.1:5000/uploads/projects/4bfba18e4c73a00f_4.png"
-    ],
-    "video": null,
-    "optimization": "",
-    "credits": [],
-    "createdAt": "2026-09-14T07:00:19Z",
-    "updatedAt": "2026-09-14T07:10:31Z"
+    "createdAt": "2026-09-15T04:45:18Z",
+    "updatedAt": "2026-09-15T04:45:18Z"
   }
 ]
