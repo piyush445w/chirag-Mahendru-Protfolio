@@ -725,8 +725,8 @@ def api_admin_hero_image():
     if "file" not in request.files:
         return jsonify({"error": "No file"}), 400
     file = request.files["file"]
-    if request.content_length and request.content_length > 10 * 1024 * 1024:
-        return jsonify({"error": "Image too large. Max 10MB."}), 413
+    if request.content_length and request.content_length > 40 * 1024 * 1024:
+        return jsonify({"error": "Image too large. Max 40MB."}), 413
     if file.filename == "":
         return jsonify({"error": "No file selected"}), 400
     filename = secrets.token_hex(8) + "_" + file.filename
@@ -807,7 +807,7 @@ def api_admin_upload_project_media():
     file = request.files["file"]
     field = request.form.get("field", "gallery")
     slug = request.form.get("slug", "").strip()
-    image_max = 10 * 1024 * 1024
+    image_max = 40 * 1024 * 1024
     video_max = 1000 * 1024 * 1024
     if request.content_length:
         if field == "video" and request.content_length > video_max:
