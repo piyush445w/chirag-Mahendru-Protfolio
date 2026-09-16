@@ -461,18 +461,13 @@
                     if (progressEl) progressEl.remove();
                 }
 
-                const urlMap = { 'coverImage': 'cover-image-url', 'heroImage': 'hero-image-url', 'video': 'video-url' };
-                const previewMap = { 'coverImage': 'cover-preview', 'heroImage': 'hero-preview', 'video': 'video-preview' };
-                const textInput = document.getElementById(urlMap[field]);
-                const previewId2 = previewMap[field];
-                if (textInput) textInput.value = result.url;
-                if (previewId2) appendPreview(result.url, file.type, previewId2, () => { if (textInput) textInput.value = ''; });
+                return result;
             } catch (err) {
                 if (container) {
                     const progressEl = container.querySelector('.upload-progress');
                     if (progressEl) progressEl.remove();
                 }
-                alert(err.message);
+                throw err;
             }
         }
         function appendPreview(url, type, containerId, onClear) {
