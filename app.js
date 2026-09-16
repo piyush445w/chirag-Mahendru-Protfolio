@@ -1040,7 +1040,7 @@
         // Build the full modal content in a single fragment
         var html = '';
 
-        // Images tab — hero + thumbnail strip
+        // Images tab Â— hero + thumbnail strip
         html += '<div class="project-detail-tab-content active" data-tab-content="images">';
         if (coverImage) {
             html += '<div class="project-detail-hero-wrapper">';
